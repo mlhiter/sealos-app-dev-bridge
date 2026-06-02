@@ -47,6 +47,12 @@ The repository now has an unpackable extension scaffold, profile capture and sto
 - `git diff --check`
 - `python3 /Users/mlhiter/.codex/skills/codex-dynamic-workflows/scripts/verify_workflow.py .workflow/implement-sealos-app-dev-bridge`
 
+## Live Browser Verification Attempt
+
+- Tried to connect to the Codex Chrome automation channel on 2026-06-02; it reported `Browser is not available: extension`.
+- Tried a temporary Chrome profile smoke test that loads `extension/dist` with `--load-extension`; the installed Google Chrome binary reported `--load-extension is not allowed in Google Chrome, ignoring`.
+- Because of those external browser constraints, live unpacked-extension verification against an authenticated Sealos Desktop page was not completed in this run.
+
 ## Remaining Risks
 
 - Real Chrome loading against the user's authenticated Sealos Desktop session still needs manual verification.
