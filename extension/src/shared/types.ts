@@ -38,6 +38,14 @@ export type WorkspaceQuotaItem = {
   limit: number;
 };
 
+export type SdkMessageLogEntry = {
+  messageId: string;
+  apiName: string;
+  success: boolean;
+  message: string;
+  at: string;
+};
+
 export type DesktopCapturePayload = {
   desktopOrigin: string;
   sessionText: string | null;
@@ -99,6 +107,7 @@ export type BridgeState = {
   tabSelections: Record<string, TabProfileSelection>;
   originDefaults: Record<string, LocalOriginDefault>;
   activeProfileId?: string;
+  recentMessages: SdkMessageLogEntry[];
   settings: BridgeSettings;
   updatedAt: string;
 };

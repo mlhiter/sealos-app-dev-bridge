@@ -97,11 +97,34 @@ type BridgeSelectionState = {
 
 Provider apps call `window.top.postMessage(...)` through `sealos-desktop-sdk`. In a normal Desktop iframe, `window.top` is Desktop. In a standalone `localhost` tab, `window.top === window`, so the bridge must run early enough to answer or intercept the SDK message before the app treats its own message as a failed response.
 
+Implementation shape:
+
+```text
+main-world injected script
+  listens for SDK-shaped same-window messages
+        |
+        | window.postMessage, internal channel only
+        v
+isolated content script
+  forwards request to background
+        |
+        | chrome.runtime.sendMessage
+        v
+background service worker
+  resolves selected profile and builds SDK reply
+        |
+        | chrome.runtime response + window.postMessage
+        v
+main-world injected script
+  posts reply with original messageId
+```
+
 Implementation implications:
 
-- Inject at `document_start`.
-- Inject into the page main world, not only the extension isolated world.
-- Validate that the current local origin is allowed.
+- Inject the page-side listener at `document_start`.
+- Run the SDK listener in the page main world, not only the extension isolated world.
+- Keep Chrome APIs and storage access out of the main world.
+- Validate that the current local origin is allowed in the background service worker.
 - Resolve the correct profile before answering.
 - Reply with the same `messageId` shape the SDK expects.
 
@@ -112,8 +135,10 @@ SDK APIs to support:
 | `user.getInfo` | Current profile `SessionV1` |
 | `getLanguage` | `{ lng }` |
 | `getHostConfig` | `{ cloud, features }` |
-| `account.getWorkspaceQuota` | Quota list, empty or fetched strategy in MVP |
-| `event-bus` | Local fallback for app events |
+| `account.getWorkspaceQuota` | Safe zero-quota fallback in MVP |
+| `event-bus` | Safe local no-op fallback for known app events |
+
+Unsupported SDK APIs return `function is not declare`, matching the Desktop SDK's existing failure wording.
 
 ## Profile Resolution
 
@@ -147,6 +172,9 @@ The background service worker accepts typed extension messages:
 | `bridge.rememberOriginDefault` | Add or update an optional local-origin default |
 | `bridge.setActiveProfile` | Set or clear the active fallback profile |
 | `bridge.resolveProfile` | Resolve the effective profile for a local tab |
+| `bridge.handleSdkRequest` | Resolve a local profile and return an SDK-shaped reply |
+
+The background service worker keeps a short `recentMessages` list for debugging. Entries include message id, API name, success state, message text, and timestamp only. They must not include session payloads, tokens, or kubeconfig strings.
 
 ## Security Boundaries
 

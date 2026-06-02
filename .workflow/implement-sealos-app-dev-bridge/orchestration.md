@@ -67,7 +67,10 @@ Expected output: usable extension with current-tab cluster selection as the prim
 - [x] Packet 1 committed.
 - [x] Packet 2 implemented and locally verified.
 - [x] Packet 2 checked and neat-freaked.
-- [ ] Packet 2 committed.
+- [x] Packet 2 committed.
+- [x] Packet 3 implemented and locally verified.
+- [x] Packet 3 checked and neat-freaked.
+- [ ] Packet 3 committed.
 - [ ] Packet 2 complete, checked, neat-freaked, committed.
 - [ ] Packet 3 complete, checked, neat-freaked, committed.
 - [ ] Packet 4 complete, checked, neat-freaked, committed.

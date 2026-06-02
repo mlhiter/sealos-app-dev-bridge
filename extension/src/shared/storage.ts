@@ -15,6 +15,7 @@ export function createDefaultState(now: string = new Date().toISOString()): Brid
     profiles: {},
     tabSelections: {},
     originDefaults: {},
+    recentMessages: [],
     settings: {
       allowedDesktopOrigins: [],
       allowedLocalOrigins: []
@@ -26,10 +27,11 @@ export function createDefaultState(now: string = new Date().toISOString()): Brid
 export async function readState(storage: StorageArea): Promise<BridgeState> {
   const values = await storage.get(STORAGE_KEY);
   const candidate = values[STORAGE_KEY];
-  if (!isBridgeState(candidate)) {
+  const migrated = migrateState(candidate);
+  if (!migrated) {
     return createDefaultState();
   }
-  return candidate;
+  return migrated;
 }
 
 export async function writeState(storage: StorageArea, state: BridgeState): Promise<void> {
@@ -97,18 +99,24 @@ export function createChromeStorageArea(area: chrome.storage.StorageArea): Stora
   };
 }
 
-function isBridgeState(value: unknown): value is BridgeState {
-  if (!value || typeof value !== 'object') return false;
+function migrateState(value: unknown): BridgeState | undefined {
+  if (!value || typeof value !== 'object') return undefined;
   const state = value as BridgeState;
-  return (
+  const baseIsValid =
     state.schemaVersion === 1 &&
     isRecord(state.profiles) &&
     isRecord(state.tabSelections) &&
     isRecord(state.originDefaults) &&
     Boolean(state.settings) &&
     Array.isArray(state.settings.allowedDesktopOrigins) &&
-    Array.isArray(state.settings.allowedLocalOrigins)
-  );
+    Array.isArray(state.settings.allowedLocalOrigins);
+
+  if (!baseIsValid) return undefined;
+
+  return {
+    ...state,
+    recentMessages: Array.isArray(state.recentMessages) ? state.recentMessages : []
+  };
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

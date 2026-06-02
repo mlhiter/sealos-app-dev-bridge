@@ -1,6 +1,7 @@
 import type { BridgeRequest, BridgeResponse } from '../shared/api';
 import { isLocalDevelopmentOrigin, normalizeOrigin } from '../shared/origin';
 import { createOriginDefault, createTabSelection, resolveEffectiveProfile } from '../shared/profile';
+import { handleSdkRequest } from '../shared/sdk';
 import { createProfileFromCapture } from '../shared/session';
 import {
   createChromeStorageArea,
@@ -34,6 +35,8 @@ export async function handleBridgeRequest(
         return ok(await setActiveProfile(storage, message.profileId));
       case 'bridge.resolveProfile':
         return ok(await resolveProfileForRequest(storage, message, sender));
+      case 'bridge.handleSdkRequest':
+        return ok(await handleSdkRequestForTab(storage, message, sender));
       default:
         return fail('unknown-message', 'Unknown bridge message');
     }
@@ -195,6 +198,43 @@ async function resolveProfileForRequest(
     tabId: request.tabId ?? sender.tab?.id,
     localOrigin
   });
+}
+
+async function handleSdkRequestForTab(
+  storage: ReturnType<typeof createChromeStorageArea>,
+  request: Extract<BridgeRequest, { type: 'bridge.handleSdkRequest' }>,
+  sender: chrome.runtime.MessageSender
+) {
+  const localOrigin = normalizeOrigin(request.localOrigin);
+  const state = await readState(storage);
+  if (!isLocalDevelopmentOrigin(localOrigin, state.settings.allowedLocalOrigins)) {
+    throw new Error(`Local origin is not allowed: ${localOrigin}`);
+  }
+
+  const resolution = resolveEffectiveProfile(state, {
+    tabId: request.tabId ?? sender.tab?.id,
+    localOrigin
+  });
+  const profile = resolution.profileId ? state.profiles[resolution.profileId] : undefined;
+  const result = handleSdkRequest({
+    request: request.request,
+    profile
+  });
+
+  if (!result.handled) {
+    throw new Error(`Unsupported SDK request: ${request.request.apiName}`);
+  }
+
+  await updateState(storage, (current) => ({
+    ...current,
+    recentMessages: [result.log, ...current.recentMessages].slice(0, 50),
+    updatedAt: new Date().toISOString()
+  }));
+
+  return {
+    reply: result.reply,
+    resolution
+  };
 }
 
 async function executeCaptureScript(tabId: number): Promise<DesktopCapturePayload> {

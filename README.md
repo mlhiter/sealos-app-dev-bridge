@@ -5,7 +5,7 @@ Sealos App Dev Bridge is a browser-extension project for local Sealos Desktop ap
 The first implementation target is Chrome Manifest V3.
 
 > [!NOTE]
-> This repository now contains the initial TypeScript Chrome MV3 scaffold plus profile storage, Desktop session capture plumbing, and tab-first profile resolution. SDK bridge behavior and full popup/options workflows are implemented in later milestones.
+> This repository now contains the initial TypeScript Chrome MV3 scaffold plus profile storage, Desktop session capture plumbing, tab-first profile resolution, and the main-world SDK bridge. Full popup/options workflows are implemented in later milestones.
 
 ## Why
 
@@ -122,6 +122,7 @@ The current stack is TypeScript plus a minimal Vite build pipeline. Popup and op
 - Desktop `localStorage.session` normalization into the `sealos-desktop-sdk` `SessionV1` shape.
 - Current-tab profile selection model with origin-default and active-profile fallback logic.
 - Redacted public profile summaries for UI/debug surfaces.
+- Main-world SDK bridge for `user.getInfo`, `getLanguage`, `getHostConfig`, `account.getWorkspaceQuota`, and safe `event-bus` fallbacks.
 
 ## Safety Model
 

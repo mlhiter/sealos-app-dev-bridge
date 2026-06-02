@@ -2,7 +2,7 @@
 
 ## Current Stage
 
-Sealos App Dev Bridge has an initial TypeScript Chrome MV3 scaffold with profile storage, Desktop session capture plumbing, and tab-first profile resolution. The next implementation focus is the localhost SDK bridge and full popup/options workflow.
+Sealos App Dev Bridge has an initial TypeScript Chrome MV3 scaffold with profile storage, Desktop session capture plumbing, tab-first profile resolution, and the localhost SDK bridge. The next implementation focus is the full popup/options workflow.
 
 ## Phase 1: Minimal Local Bridge
 
@@ -12,8 +12,8 @@ Goal: make one local provider app initialize successfully from a captured Deskto
 - Add configured Desktop origin capture. Done in the profile capture milestone.
 - Read and normalize `localStorage.session` into SDK `SessionV1`. Done in the profile capture milestone.
 - Persist profiles in `chrome.storage.local`. Done in the profile capture milestone.
-- Inject a `document_start` main-world bridge into `localhost` and `127.0.0.1`.
-- Respond to `user.getInfo`, `getLanguage`, and `getHostConfig`.
+- Inject a `document_start` main-world bridge into `localhost` and `127.0.0.1`. Done in the SDK bridge milestone.
+- Respond to `user.getInfo`, `getLanguage`, and `getHostConfig`. Done in the SDK bridge milestone.
 - Add minimal popup showing capture state and the profile selected for the current tab.
 - Let the popup assign or switch the current tab profile, with a reload prompt when needed.
 - Verify with a local DevBox or DBProvider page.
@@ -38,8 +38,8 @@ Merge condition: the same `localhost:3000` tab can be switched between captured 
 
 Goal: cover the shared provider behaviors that happen after initialization.
 
-- Implement `account.getWorkspaceQuota` with cached or fetched quota strategy.
-- Implement `event-bus` local fallbacks for `openDesktopApp`, `closeDesktopApp`, `requestLogin`, and `quitGuide`.
+- Implement `account.getWorkspaceQuota` with cached or fetched quota strategy. MVP safe zero-quota fallback is implemented.
+- Implement `event-bus` local fallbacks for `openDesktopApp`, `closeDesktopApp`, `requestLogin`, and `quitGuide`. MVP safe no-op fallback is implemented.
 - Add optional app-key URL mapping for cross-app local development.
 - Add debug panel for last SDK messages and responses.
 - Verify DevBox, DBProvider, AppLaunchpad, ObjectStorage, and AIProxy initialization paths.

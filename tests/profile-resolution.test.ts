@@ -141,6 +141,21 @@ describe('storage public state', () => {
     assert.equal('kubeconfig' in publicState.profiles[0], false);
     assert.equal('token' in publicState.profiles[0], false);
   });
+
+  it('migrates older state without recent SDK message logs', async () => {
+    const memory = createMemoryStorage();
+    const profile = createTestProfile('region-a', 'workspace-a', 'Ada');
+    const state = upsertProfile(createDefaultState('2026-06-02T09:00:00.000Z'), profile);
+    delete (state as Partial<BridgeState>).recentMessages;
+    await memory.set({
+      sealosAppDevBridgeState: state
+    });
+
+    const loaded = await readState(memory);
+
+    assert.equal(Object.keys(loaded.profiles).length, 1);
+    assert.deepEqual(loaded.recentMessages, []);
+  });
 });
 
 function createTestProfile(regionUID: string, nsid: string, name: string) {

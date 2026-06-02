@@ -2,7 +2,7 @@
 
 ## Current Status
 
-As of 2026-06-02, this project has a TypeScript Chrome MV3 scaffold with profile storage, Desktop session capture plumbing, tab-first profile resolution, package scripts, a Vite build pipeline, Node test runner tests executed through `tsx`, placeholder popup/options pages, and background/content/injected entrypoints. SDK bridge behavior and full popup/options workflows are still implemented in later milestones.
+As of 2026-06-02, this project has a TypeScript Chrome MV3 scaffold with profile storage, Desktop session capture plumbing, tab-first profile resolution, main-world SDK bridge behavior, package scripts, a Vite build pipeline, Node test runner tests executed through `tsx`, placeholder popup/options pages, and background/content/injected entrypoints. Full popup/options workflows are still implemented in later milestones.
 
 ## Local Commands
 
@@ -91,6 +91,11 @@ Do not continue if the captured profile does not clearly identify the environmen
 5. Reload the tab when prompted.
 6. Verify the app does not show the standalone-use redirect or modal.
 7. In browser devtools, confirm SDK calls receive successful responses.
+   - `user.getInfo` returns the selected profile session.
+   - `getLanguage` returns the selected profile language.
+   - `getHostConfig` returns the selected profile host config with `regionUid`.
+   - `account.getWorkspaceQuota` returns the MVP safe zero-quota fallback.
+   - known `event-bus` app events return a safe local no-op response.
 8. Confirm provider API requests include the expected session-derived authorization header.
 9. Switch the current tab to another profile, reload, and confirm behavior follows the new profile.
 10. Disable the extension and reload to confirm normal standalone failure behavior returns.

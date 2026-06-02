@@ -22,7 +22,7 @@
     {
       "id": "packet-3",
       "name": "SDK bridge",
-      "status": "pending"
+      "status": "implemented"
     },
     {
       "id": "packet-4",
@@ -31,7 +31,7 @@
     }
   ],
   "verification": {
-    "status": "packet-2-green",
+    "status": "packet-3-green",
     "checks": [
       "npm run typecheck",
       "npm test",

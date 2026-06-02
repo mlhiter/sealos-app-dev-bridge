@@ -64,7 +64,7 @@ Sections:
 - Debug
   - storage export without secrets
   - clear all profiles
-  - recent SDK message log
+  - recent SDK message log with metadata only
 
 ## Debug Overlay Or Panel
 
@@ -81,6 +81,8 @@ Fields:
 - last response
 - redacted session summary
 - errors
+
+Debug message logs should show API names, success state, and error text only. They must not show `user.getInfo` response payloads, token, or kubeconfig.
 
 ## Navigation Principles
 

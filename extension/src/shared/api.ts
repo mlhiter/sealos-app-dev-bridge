@@ -3,8 +3,10 @@ import type {
   BridgeState,
   EffectiveProfileResolution,
   LocalOriginDefault,
-  ProfileSummary
+  ProfileSummary,
+  SdkMessageLogEntry
 } from './types';
+import type { SdkRequestMessage, SdkReplyMessage } from './sdk';
 
 export type BridgeRequest =
   | {
@@ -39,6 +41,12 @@ export type BridgeRequest =
       type: 'bridge.resolveProfile';
       tabId?: number;
       localOrigin: string;
+    }
+  | {
+      type: 'bridge.handleSdkRequest';
+      tabId?: number;
+      localOrigin: string;
+      request: SdkRequestMessage;
     };
 
 export type BridgeError = {
@@ -76,6 +84,10 @@ export type BridgeResponseMap = {
   'bridge.rememberOriginDefault': LocalOriginDefault;
   'bridge.setActiveProfile': PublicBridgeState;
   'bridge.resolveProfile': EffectiveProfileResolution;
+  'bridge.handleSdkRequest': {
+    reply: SdkReplyMessage;
+    resolution: EffectiveProfileResolution;
+  };
 };
 
 export type InternalBridgeState = BridgeState & {
