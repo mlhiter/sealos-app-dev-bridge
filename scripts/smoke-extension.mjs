@@ -5,9 +5,10 @@ import { join, resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '..');
 const extensionDir = resolve(root, 'extension/dist');
-const playwrightPackage = 'file:///Users/mlhiter/Library/Caches/ms-playwright-go/1.52.0/package/index.mjs';
+const fallbackPlaywrightPackage =
+  'file:///Users/mlhiter/Library/Caches/ms-playwright-go/1.52.0/package/index.mjs';
 
-const { chromium } = await import(playwrightPackage);
+const { chromium } = await loadPlaywright();
 
 const server = await startFixtureServer();
 const origin = `http://127.0.0.1:${server.address().port}`;
@@ -300,5 +301,13 @@ function assertOk(response, label) {
 function assert(condition, message) {
   if (!condition) {
     throw new Error(message);
+  }
+}
+
+async function loadPlaywright() {
+  try {
+    return await import('playwright');
+  } catch {
+    return import(fallbackPlaywrightPackage);
   }
 }
