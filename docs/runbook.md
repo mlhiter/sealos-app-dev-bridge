@@ -30,6 +30,12 @@ Build the unpacked extension:
 npm run build
 ```
 
+Run the automated extension smoke test:
+
+```bash
+npm run smoke:extension
+```
+
 Clean generated extension output:
 
 ```bash
@@ -82,6 +88,20 @@ extension/dist
 Do not continue if the captured profile does not clearly identify the environment.
 
 ## Local App Verification
+
+Automated fixture path:
+
+1. Build the extension:
+   ```bash
+   npm run build
+   ```
+2. Run:
+   ```bash
+   npm run smoke:extension
+   ```
+3. Confirm the JSON output reports `ok: true`.
+
+Manual provider path:
 
 1. Start a Sealos provider app locally, for example on `http://localhost:3000`, or serve the fixture:
    ```bash

@@ -24,12 +24,13 @@
 - `npm run typecheck`
 - `npm test`
 - `npm run build`
+- `npm run smoke:extension`
 - `npm audit --audit-level=moderate`
 - `git diff --check`
 - `python3 /Users/mlhiter/.codex/skills/codex-dynamic-workflows/scripts/verify_workflow.py .workflow/implement-sealos-app-dev-bridge`
 
-All listed checks passed after Packet 4 review fixes. `npm test` reported 15 passing tests.
+All listed checks passed after Packet 4 review fixes. `npm test` reported 15 passing tests, and `npm run smoke:extension` verified the unpacked extension in Playwright Chromium.
 
 ## Remaining Risk
 
-- Real Chrome loading and live Sealos Desktop capture need manual verification in the user's authenticated browser profile.
+- Live Sealos Desktop capture with the user's authenticated Chrome profile still needs manual verification against a real Sealos Desktop page.

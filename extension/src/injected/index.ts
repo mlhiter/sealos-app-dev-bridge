@@ -5,7 +5,6 @@ import { isSdkRequestMessage } from '../shared/sdk';
 const pendingRequests = new Set<string>();
 
 window.addEventListener('message', (event: MessageEvent) => {
-  if (event.source !== window) return;
   if (event.origin !== window.location.origin) return;
 
   const data = event.data;
@@ -16,6 +15,7 @@ window.addEventListener('message', (event: MessageEvent) => {
     return;
   }
 
+  if (event.source !== window) return;
   if (!isSdkRequestMessage(data)) return;
 
   const requestId = createRequestId(data.messageId);

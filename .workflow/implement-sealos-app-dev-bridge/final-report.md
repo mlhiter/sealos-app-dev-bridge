@@ -44,19 +44,20 @@ The repository now has an unpackable extension scaffold, profile capture and sto
 - `npm test` with 15 passing tests
 - `npm run build`
 - `npm audit --audit-level=moderate`
+- `npm run smoke:extension`
 - `git diff --check`
 - `python3 /Users/mlhiter/.codex/skills/codex-dynamic-workflows/scripts/verify_workflow.py .workflow/implement-sealos-app-dev-bridge`
 
 ## Live Browser Verification Attempt
 
 - Tried to connect to the Codex Chrome automation channel on 2026-06-02; it reported `Browser is not available: extension`.
-- Tried a temporary Chrome profile smoke test that loads `extension/dist` with `--load-extension`; the installed Google Chrome binary reported `--load-extension is not allowed in Google Chrome, ignoring`.
-- Because of those external browser constraints, live unpacked-extension verification against an authenticated Sealos Desktop page was not completed in this run.
+- The installed Google Chrome binary rejected command-line unpacked loading with `--load-extension is not allowed in Google Chrome, ignoring`.
+- Added and ran `npm run smoke:extension` through Playwright Chromium. It loads `extension/dist`, captures a fake Desktop profile, selects it for a localhost tab, verifies SDK replies, and verifies standalone timeout when the extension is disabled.
 
 ## Remaining Risks
 
-- Real Chrome loading against the user's authenticated Sealos Desktop session still needs manual verification.
-- A real provider app should be checked for `sealosApp.getSession()` success and session-derived authorization headers.
+- Real Chrome loading against the user's authenticated Sealos Desktop session still needs manual verification because it depends on the user's logged-in browser profile.
+- A real provider app should still be checked for `sealosApp.getSession()` success and session-derived authorization headers.
 - Switching a running app still requires reload in the MVP.
 
 ## Reusable Follow-up

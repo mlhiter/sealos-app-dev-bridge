@@ -82,6 +82,7 @@ Run verification:
 npm run typecheck
 npm test
 npm run build
+npm run smoke:extension
 ```
 
 The unpacked extension build is emitted to:
@@ -135,6 +136,15 @@ npx --yes http-server extension/fixtures -p 3000
 ```
 
 Then open `http://localhost:3000`, choose a captured profile for that tab in the popup, reload, and send fixture SDK messages.
+
+For an automated browser-level smoke test, run:
+
+```bash
+npm run build
+npm run smoke:extension
+```
+
+The smoke test launches a temporary Chromium profile, loads `extension/dist`, captures a fake Desktop profile, selects it for a localhost tab, verifies SDK replies, then verifies the same page times out when the extension is disabled.
 
 ## Safety Model
 

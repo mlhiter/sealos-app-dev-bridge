@@ -27,4 +27,4 @@ All listed checks passed before entering Packet 3 fixed-pattern review. The Pack
 
 ## Remaining Risk
 
-- Browser-level extension loading against a real authenticated Sealos Desktop tab still needs manual verification because it depends on the user's Chrome profile and live Desktop session.
+- Browser-level extension smoke is covered by Packet 4's automated Playwright Chromium run. Real authenticated Sealos Desktop capture still needs the user's logged-in Chrome profile or a live Desktop session.
