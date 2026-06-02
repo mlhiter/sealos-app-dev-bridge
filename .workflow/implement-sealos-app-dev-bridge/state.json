@@ -17,7 +17,7 @@
     {
       "id": "packet-2",
       "name": "Profile capture and resolution",
-      "status": "pending"
+      "status": "implemented"
     },
     {
       "id": "packet-3",
@@ -31,7 +31,7 @@
     }
   ],
   "verification": {
-    "status": "packet-1-green",
+    "status": "packet-2-green",
     "checks": [
       "npm run typecheck",
       "npm test",

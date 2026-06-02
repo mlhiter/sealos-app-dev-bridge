@@ -2,7 +2,7 @@
 
 ## Current Status
 
-As of 2026-06-02, this project has a TypeScript Chrome MV3 scaffold. It includes package scripts, a Vite build pipeline, Node test runner tests executed through `tsx`, placeholder popup/options pages, and background/content/injected entrypoints. Profile capture and SDK bridge behavior are still implemented in later milestones.
+As of 2026-06-02, this project has a TypeScript Chrome MV3 scaffold with profile storage, Desktop session capture plumbing, tab-first profile resolution, package scripts, a Vite build pipeline, Node test runner tests executed through `tsx`, placeholder popup/options pages, and background/content/injected entrypoints. SDK bridge behavior and full popup/options workflows are still implemented in later milestones.
 
 ## Local Commands
 
@@ -70,7 +70,10 @@ extension/dist
 2. Log in normally.
 3. Click the extension popup.
 4. Capture the current profile.
-5. Confirm the popup shows:
+   - Current implementation status: the background `bridge.captureCurrentTab` API exists.
+   - Popup capture controls are added in a later UI milestone.
+   - Until the UI control exists, this flow is verified through tests and background API inspection rather than a normal click path.
+5. Confirm the resolved profile summary shows:
    - Desktop origin
    - region UID
    - workspace or nsid

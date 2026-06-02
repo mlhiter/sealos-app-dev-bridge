@@ -8,7 +8,7 @@ The first implementation target is a Chrome Manifest V3 extension.
 
 ## Current State
 
-As of 2026-06-02, the project has a TypeScript Chrome Manifest V3 scaffold with Vite-based build scripts, Node test runner tests executed through `tsx`, popup/options placeholders, background/content/injected entrypoints, and documentation. Profile capture and SDK bridge behavior are implemented in later milestones.
+As of 2026-06-02, the project has a TypeScript Chrome Manifest V3 scaffold with profile storage, Desktop session capture plumbing, tab-first profile resolution, Node test runner tests executed through `tsx`, popup/options placeholders, background/content/injected entrypoints, and documentation. SDK bridge behavior and full popup/options workflows are implemented in later milestones.
 
 ## Hard Rules
 

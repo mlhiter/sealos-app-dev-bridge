@@ -132,6 +132,22 @@ Changing the selected profile for a tab should prompt a reload in the MVP. Provi
 
 The default storage is `chrome.storage.local`. Captured session data must not leave the browser extension. Avoid syncing profiles through `chrome.storage.sync` because session material may exceed sync quotas and should not move across browsers by default.
 
+The extension stores full `BridgeProfile` records internally, but UI/debug APIs expose only redacted `ProfileSummary` values. `ProfileSummary` may indicate whether token or kubeconfig data exists, but it must not include token or kubeconfig strings.
+
+## Background API
+
+The background service worker accepts typed extension messages:
+
+| Message | Purpose |
+| --- | --- |
+| `bridge.captureCurrentTab` | Capture `localStorage.session` and cloud config from a trusted Desktop tab |
+| `bridge.getState` | Return redacted profile state for UI surfaces |
+| `bridge.selectTabProfile` | Select a profile for the current tab and local origin |
+| `bridge.clearTabProfile` | Clear the current tab override |
+| `bridge.rememberOriginDefault` | Add or update an optional local-origin default |
+| `bridge.setActiveProfile` | Set or clear the active fallback profile |
+| `bridge.resolveProfile` | Resolve the effective profile for a local tab |
+
 ## Security Boundaries
 
 - Only configured Desktop origins may be captured.

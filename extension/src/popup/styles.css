@@ -53,6 +53,12 @@ h1 {
   font-weight: 600;
 }
 
+.meta-line {
+  color: #596760;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
 code {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 12px;

@@ -10,6 +10,8 @@ Sealos App Dev Bridge has three expected user-facing surfaces:
 
 The first implementation can ship popup-only if it still supports capture, profile switching, and current-state inspection.
 
+Current implementation status: the popup can display the current tab origin and effective profile-resolution source. Capture buttons, profile selection controls, reload prompt, and origin-default controls are added in the full UI milestone.
+
 ## Popup
 
 Primary job: answer "what profile is this local tab using right now?" and let the developer choose a cluster for that tab.

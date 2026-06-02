@@ -2,16 +2,16 @@
 
 ## Current Stage
 
-Sealos App Dev Bridge has an initial TypeScript Chrome MV3 scaffold. The next implementation focus is profile capture, tab-first profile resolution, and the localhost SDK bridge.
+Sealos App Dev Bridge has an initial TypeScript Chrome MV3 scaffold with profile storage, Desktop session capture plumbing, and tab-first profile resolution. The next implementation focus is the localhost SDK bridge and full popup/options workflow.
 
 ## Phase 1: Minimal Local Bridge
 
 Goal: make one local provider app initialize successfully from a captured Desktop session.
 
 - Create Chrome MV3 extension scaffold. Done in the initial implementation milestone.
-- Add configured Desktop origin capture.
-- Read and normalize `localStorage.session` into SDK `SessionV1`.
-- Persist profiles in `chrome.storage.local`.
+- Add configured Desktop origin capture. Done in the profile capture milestone.
+- Read and normalize `localStorage.session` into SDK `SessionV1`. Done in the profile capture milestone.
+- Persist profiles in `chrome.storage.local`. Done in the profile capture milestone.
 - Inject a `document_start` main-world bridge into `localhost` and `127.0.0.1`.
 - Respond to `user.getInfo`, `getLanguage`, and `getHostConfig`.
 - Add minimal popup showing capture state and the profile selected for the current tab.
