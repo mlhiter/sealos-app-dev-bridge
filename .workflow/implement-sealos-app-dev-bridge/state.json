@@ -2,7 +2,7 @@
   "title": "Implement Sealos App Dev Bridge",
   "slug": "implement-sealos-app-dev-bridge",
   "created_at": "2026-06-02T09:04:05+00:00",
-  "status": "active",
+  "status": "complete",
   "approval": {
     "required": false,
     "granted": true,
@@ -31,7 +31,7 @@
     }
   ],
   "verification": {
-    "status": "packet-4-checked-neat-freaked",
+    "status": "complete",
     "checks": [
       "npm run typecheck",
       "npm test",

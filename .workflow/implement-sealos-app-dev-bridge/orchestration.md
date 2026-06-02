@@ -74,6 +74,6 @@ Expected output: usable extension with current-tab cluster selection as the prim
 - [x] Packet 4 implemented and locally verified.
 - [x] Packet 4 checked.
 - [x] Packet 4 neat-freaked.
-- [ ] Packet 4 committed.
+- [x] Packet 4 committed.
 - [x] Workflow verification complete.
 - [x] Final report written.
