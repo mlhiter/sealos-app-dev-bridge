@@ -71,6 +71,7 @@ export type PublicBridgeState = {
   activeProfileId?: string;
   allowedDesktopOrigins: string[];
   allowedLocalOrigins: string[];
+  recentMessages: BridgeState['recentMessages'];
 };
 
 export type BridgeResponseMap = {

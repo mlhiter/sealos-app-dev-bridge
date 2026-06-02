@@ -80,7 +80,8 @@ export function toPublicState(state: BridgeState): PublicBridgeState {
     ),
     activeProfileId: state.activeProfileId,
     allowedDesktopOrigins: state.settings.allowedDesktopOrigins,
-    allowedLocalOrigins: state.settings.allowedLocalOrigins
+    allowedLocalOrigins: state.settings.allowedLocalOrigins,
+    recentMessages: state.recentMessages
   };
 }
 

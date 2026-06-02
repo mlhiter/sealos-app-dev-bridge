@@ -48,8 +48,9 @@ export function isSdkRequestMessage(value: unknown): value is SdkRequestMessage 
   const message = value as SdkRequestMessage;
   return (
     typeof message.messageId === 'string' &&
+    message.messageId.trim() !== '' &&
     typeof message.apiName === 'string' &&
-    isSupportedSdkApi(message.apiName)
+    message.apiName.trim() !== ''
   );
 }
 

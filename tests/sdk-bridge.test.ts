@@ -124,7 +124,9 @@ describe('SDK bridge responder', () => {
 
   it('recognizes SDK-shaped messages only', () => {
     assert.equal(isSdkRequestMessage({ messageId: 'id', apiName: 'user.getInfo' }), true);
-    assert.equal(isSdkRequestMessage({ messageId: 'id', apiName: 'random.page.message' }), false);
+    assert.equal(isSdkRequestMessage({ messageId: 'id', apiName: 'random.page.message' }), true);
+    assert.equal(isSdkRequestMessage({ messageId: '', apiName: 'user.getInfo' }), false);
+    assert.equal(isSdkRequestMessage({ messageId: 'id', apiName: '' }), false);
     assert.equal(isSdkRequestMessage({ messageId: 'id' }), false);
     assert.equal(isSdkRequestMessage(null), false);
   });

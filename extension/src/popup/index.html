@@ -9,13 +9,40 @@
   <body>
     <main class="popup-shell">
       <header class="popup-header">
-        <h1>Sealos Bridge</h1>
-        <span id="status" class="status-pill">Scaffold</span>
+        <div>
+          <h1>Sealos Bridge</h1>
+          <p id="status" class="status-line">Loading</p>
+        </div>
+        <button id="open-options" class="icon-button" type="button" title="Open options">Options</button>
       </header>
+
       <section class="state-panel">
-        <span class="label">Current Tab</span>
+        <div class="panel-head">
+          <span class="label">Current Tab</span>
+          <span id="tab-kind" class="status-pill">Unknown</span>
+        </div>
         <code id="current-origin">No tab detected</code>
         <span id="profile-source" class="meta-line">No profile resolved</span>
+      </section>
+
+      <section class="control-group">
+        <label class="label" for="profile-select">Profile</label>
+        <select id="profile-select"></select>
+        <button id="use-profile" class="primary-button" type="button">Use For This Tab</button>
+        <div class="button-row">
+          <button id="reload-tab" class="secondary-button" type="button">Reload Tab</button>
+          <button id="remember-origin" class="secondary-button" type="button">Remember Origin</button>
+        </div>
+      </section>
+
+      <section class="control-group">
+        <button id="capture-profile" class="primary-button" type="button">Capture Current Desktop Tab</button>
+        <p id="capture-note" class="meta-line">Open an authenticated Sealos Desktop tab before capturing.</p>
+      </section>
+
+      <section class="state-panel">
+        <span class="label">Effective Profile</span>
+        <div id="profile-summary" class="summary-block">No profile selected.</div>
       </section>
     </main>
     <script type="module" src="../assets/popup.js"></script>

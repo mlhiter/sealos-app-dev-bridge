@@ -27,15 +27,16 @@
     {
       "id": "packet-4",
       "name": "UI, docs, and final verification",
-      "status": "pending"
+      "status": "implemented"
     }
   ],
   "verification": {
-    "status": "packet-3-green",
+    "status": "packet-4-checked-neat-freaked",
     "checks": [
       "npm run typecheck",
       "npm test",
       "npm run build",
+      "npm audit --audit-level=moderate",
       "git diff --check",
       "workflow verification"
     ]

@@ -2,7 +2,7 @@
 
 ## Current Status
 
-As of 2026-06-02, this project has a TypeScript Chrome MV3 scaffold with profile storage, Desktop session capture plumbing, tab-first profile resolution, main-world SDK bridge behavior, package scripts, a Vite build pipeline, Node test runner tests executed through `tsx`, placeholder popup/options pages, and background/content/injected entrypoints. Full popup/options workflows are still implemented in later milestones.
+As of 2026-06-02, this project has a TypeScript Chrome MV3 MVP with profile storage, Desktop session capture, tab-first profile resolution, main-world SDK bridge behavior, popup/options workflows, package scripts, a Vite build pipeline, Node test runner tests executed through `tsx`, and background/content/injected entrypoints.
 
 ## Local Commands
 
@@ -70,9 +70,8 @@ extension/dist
 2. Log in normally.
 3. Click the extension popup.
 4. Capture the current profile.
-   - Current implementation status: the background `bridge.captureCurrentTab` API exists.
-   - Popup capture controls are added in a later UI milestone.
-   - Until the UI control exists, this flow is verified through tests and background API inspection rather than a normal click path.
+   - The popup action is labeled `Capture Current Desktop Tab`.
+   - Capturing automatically trusts the current Desktop origin.
 5. Confirm the resolved profile summary shows:
    - Desktop origin
    - region UID
@@ -84,11 +83,14 @@ Do not continue if the captured profile does not clearly identify the environmen
 
 ## Local App Verification
 
-1. Start a Sealos provider app locally, for example on `http://localhost:3000`.
+1. Start a Sealos provider app locally, for example on `http://localhost:3000`, or serve the fixture:
+   ```bash
+   npx --yes http-server extension/fixtures -p 3000
+   ```
 2. Open the local page directly in a new tab.
 3. Open the extension popup on that tab.
 4. Choose the intended captured profile for the current tab.
-5. Reload the tab when prompted.
+5. Click `Use For This Tab`, then `Reload Tab`.
 6. Verify the app does not show the standalone-use redirect or modal.
 7. In browser devtools, confirm SDK calls receive successful responses.
    - `user.getInfo` returns the selected profile session.

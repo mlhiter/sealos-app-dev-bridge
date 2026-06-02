@@ -8,9 +8,7 @@ Sealos App Dev Bridge has three expected user-facing surfaces:
 2. Options page
 3. Local debug overlay or debug panel
 
-The first implementation can ship popup-only if it still supports capture, profile switching, and current-state inspection.
-
-Current implementation status: the popup can display the current tab origin and effective profile-resolution source. Capture buttons, profile selection controls, reload prompt, and origin-default controls are added in the full UI milestone.
+The MVP ships popup and options surfaces. The popup handles normal daily workflow; options handles inspection and bulk state visibility.
 
 ## Popup
 
@@ -83,6 +81,8 @@ Fields:
 - errors
 
 Debug message logs should show API names, success state, and error text only. They must not show `user.getInfo` response payloads, token, or kubeconfig.
+
+Current implementation status: the options page shows profile summaries, optional origin defaults, and metadata-only SDK message logs. It does not yet expose destructive profile deletion or storage export.
 
 ## Navigation Principles
 

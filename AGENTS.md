@@ -8,7 +8,7 @@ The first implementation target is a Chrome Manifest V3 extension.
 
 ## Current State
 
-As of 2026-06-02, the project has a TypeScript Chrome Manifest V3 scaffold with profile storage, Desktop session capture plumbing, tab-first profile resolution, main-world SDK bridge behavior, Node test runner tests executed through `tsx`, popup/options placeholders, background/content/injected entrypoints, and documentation. Full popup/options workflows are implemented in later milestones.
+As of 2026-06-02, the project has a TypeScript Chrome Manifest V3 extension MVP with profile storage, Desktop session capture, tab-first profile resolution, main-world SDK bridge behavior, popup/options workflows, Node test runner tests executed through `tsx`, and documentation.
 
 ## Hard Rules
 

@@ -9,19 +9,86 @@ body {
   margin: 0;
 }
 
+button {
+  border: 1px solid #0f7f68;
+  border-radius: 6px;
+  background: #f7f8f8;
+  color: #0f7f68;
+  padding: 7px 10px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 650;
+}
+
 .options-shell {
+  display: grid;
+  gap: 24px;
   max-width: 920px;
   margin: 0 auto;
   padding: 32px 24px;
 }
 
+.page-header,
+.row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
 h1 {
-  margin: 0 0 8px;
   font-size: 24px;
   line-height: 1.25;
 }
 
-p {
-  margin: 0;
+h2 {
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+p,
+span {
   color: #596760;
+  font-size: 13px;
+}
+
+.list {
+  display: grid;
+  gap: 8px;
+}
+
+.row {
+  border: 1px solid #c6d0cb;
+  border-radius: 6px;
+  background: #eef3f1;
+  padding: 10px;
+}
+
+.row > div {
+  display: grid;
+  gap: 4px;
+}
+
+.row span {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  overflow-wrap: anywhere;
+}
+
+.status {
+  border: 1px solid #c6d0cb;
+  border-radius: 999px;
+  padding: 3px 8px;
+  white-space: nowrap;
+}
+
+.empty {
+  border: 1px dashed #c6d0cb;
+  border-radius: 6px;
+  padding: 12px;
 }

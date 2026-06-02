@@ -6,8 +6,13 @@
 }
 
 body {
-  width: 360px;
+  width: 380px;
   margin: 0;
+}
+
+button,
+select {
+  font: inherit;
 }
 
 .popup-shell {
@@ -16,17 +21,27 @@ body {
   padding: 14px;
 }
 
-.popup-header {
+.popup-header,
+.panel-head,
+.button-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
+  gap: 8px;
 }
 
 h1 {
   margin: 0;
   font-size: 16px;
   line-height: 1.3;
+}
+
+.status-line,
+.meta-line {
+  margin: 0;
+  color: #596760;
+  font-size: 12px;
+  line-height: 1.35;
 }
 
 .status-pill {
@@ -36,11 +51,13 @@ h1 {
   color: #596760;
   font-size: 12px;
   font-weight: 600;
+  white-space: nowrap;
 }
 
-.state-panel {
+.state-panel,
+.control-group {
   display: grid;
-  gap: 6px;
+  gap: 8px;
   border: 1px solid #c6d0cb;
   border-radius: 6px;
   background: #eef3f1;
@@ -53,14 +70,55 @@ h1 {
   font-weight: 600;
 }
 
-.meta-line {
-  color: #596760;
-  font-size: 12px;
-  line-height: 1.35;
-}
-
-code {
+code,
+.summary-block span {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 12px;
   overflow-wrap: anywhere;
+}
+
+select {
+  min-width: 0;
+  border: 1px solid #c6d0cb;
+  border-radius: 6px;
+  background: #f7f8f8;
+  color: #18201d;
+  padding: 7px 9px;
+}
+
+.primary-button,
+.secondary-button,
+.icon-button {
+  border: 1px solid #0f7f68;
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 12px;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+.primary-button {
+  background: #0f7f68;
+  color: #f7f8f8;
+}
+
+.secondary-button,
+.icon-button {
+  background: #f7f8f8;
+  color: #0f7f68;
+}
+
+.button-row > button {
+  flex: 1;
+}
+
+button:disabled,
+select:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.summary-block {
+  display: grid;
+  gap: 4px;
 }
