@@ -1,0 +1,43 @@
+{
+  "title": "Implement Sealos App Dev Bridge",
+  "slug": "implement-sealos-app-dev-bridge",
+  "created_at": "2026-06-02T09:04:05+00:00",
+  "status": "active",
+  "approval": {
+    "required": false,
+    "granted": true,
+    "notes": "User requested implementation and fixed check/neat-freak/commit pattern after each feature."
+  },
+  "packets": [
+    {
+      "id": "packet-1",
+      "name": "Extension scaffold and build system",
+      "status": "implemented"
+    },
+    {
+      "id": "packet-2",
+      "name": "Profile capture and resolution",
+      "status": "pending"
+    },
+    {
+      "id": "packet-3",
+      "name": "SDK bridge",
+      "status": "pending"
+    },
+    {
+      "id": "packet-4",
+      "name": "UI, docs, and final verification",
+      "status": "pending"
+    }
+  ],
+  "verification": {
+    "status": "packet-1-green",
+    "checks": [
+      "npm run typecheck",
+      "npm test",
+      "npm run build",
+      "git diff --check",
+      "workflow verification"
+    ]
+  }
+}

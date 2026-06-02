@@ -2,7 +2,45 @@
 
 ## Current Status
 
-As of 2026-06-02, this project has documentation only. There is no extension build, test suite, or package script yet.
+As of 2026-06-02, this project has a TypeScript Chrome MV3 scaffold. It includes package scripts, a Vite build pipeline, Node test runner tests executed through `tsx`, placeholder popup/options pages, and background/content/injected entrypoints. Profile capture and SDK bridge behavior are still implemented in later milestones.
+
+## Local Commands
+
+Install dependencies:
+
+```bash
+npm install
+```
+
+Run type checking:
+
+```bash
+npm run typecheck
+```
+
+Run tests:
+
+```bash
+npm test
+```
+
+Build the unpacked extension:
+
+```bash
+npm run build
+```
+
+Clean generated extension output:
+
+```bash
+npm run clean
+```
+
+Build output:
+
+```text
+extension/dist
+```
 
 ## Initial Implementation Checklist
 
@@ -19,13 +57,11 @@ As of 2026-06-02, this project has documentation only. There is no extension bui
 
 ## Manual Chrome Loading
 
-Once an extension scaffold exists:
-
 1. Build the extension.
 2. Open Chrome extensions page.
 3. Enable Developer Mode.
 4. Choose "Load unpacked".
-5. Select the built extension directory.
+5. Select `extension/dist`.
 6. Pin the extension action for quick access.
 
 ## Profile Capture Verification

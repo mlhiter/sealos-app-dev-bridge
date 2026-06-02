@@ -8,7 +8,7 @@ The first implementation target is a Chrome Manifest V3 extension.
 
 ## Current State
 
-This project is documentation-first as of 2026-06-02. There is no implemented extension scaffold yet. The existing files define product scope, design direction, roadmap, architecture, IA, references, and runbook.
+As of 2026-06-02, the project has a TypeScript Chrome Manifest V3 scaffold with Vite-based build scripts, Node test runner tests executed through `tsx`, popup/options placeholders, background/content/injected entrypoints, and documentation. Profile capture and SDK bridge behavior are implemented in later milestones.
 
 ## Hard Rules
 
@@ -73,6 +73,8 @@ PRODUCT.md
 README.md
 ROADMAP.md
 ```
+
+Build output is generated under `extension/dist` and is ignored by git.
 
 ## Verification Expectations
 
