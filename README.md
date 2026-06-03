@@ -39,7 +39,7 @@ An optional remembered rule such as `http://localhost:3000 -> test-70` for devel
 - Capture current Desktop session into a named profile.
 - Support multiple profiles.
 - Choose a profile for the current localhost tab from the popup.
-- Switch the current tab to another profile and reload safely.
+- Switch the current tab to another profile and reload automatically.
 - Optionally remember localhost origins or ports for repeated workflows.
 - Respond to SDK APIs:
   - `user.getInfo`
@@ -124,7 +124,7 @@ The current stack is TypeScript plus a minimal Vite build pipeline. Popup and op
 - Current-tab profile selection model with origin-default and active-profile fallback logic.
 - Redacted public profile summaries for UI/debug surfaces.
 - Main-world SDK bridge for `user.getInfo`, `getLanguage`, `getHostConfig`, `account.getWorkspaceQuota`, and safe `event-bus` fallbacks.
-- Popup workflow for capture, current-tab profile selection, reload, and profile details access.
+- Popup workflow for capture, current-tab profile selection with automatic reload, and profile details access.
 - Options page for profile summaries, optional origin defaults, and metadata-only SDK message logs.
 
 ## Fixture
@@ -135,7 +135,7 @@ You can serve the local SDK fixture after building/loading the extension:
 npx --yes http-server extension/fixtures -p 3000
 ```
 
-Then open `http://localhost:3000`, choose a captured profile for that tab in the popup, reload, and send fixture SDK messages.
+Then open `http://localhost:3000`, choose a captured profile for that tab in the popup, and send fixture SDK messages after the popup reloads the tab.
 
 For an automated browser-level smoke test, run:
 
@@ -144,7 +144,7 @@ npm run build
 npm run smoke:extension
 ```
 
-The smoke test launches a temporary Chromium profile, loads `extension/dist`, captures a fake Desktop profile, selects it for a localhost tab, verifies SDK replies, then verifies the same page returns to the real standalone SDK failure shape when the extension is disabled.
+The smoke test launches a temporary Chromium profile, loads `extension/dist`, captures a fake Desktop profile, selects it for a localhost tab through the popup, verifies the automatic reload and SDK replies, then verifies the same page returns to the real standalone SDK failure shape when the extension is disabled.
 
 ## Safety Model
 

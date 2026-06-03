@@ -148,7 +148,7 @@ Use tonal layering before shadows. Browser extension popups are small surfaces; 
 ### Buttons
 
 - **Shape:** Compact rounded rectangle (6px).
-- **Primary:** Bridge Green background with Mist Surface text, used for capture, use-for-this-tab, reload, and save actions.
+- **Primary:** Bridge Green background with Mist Surface text, used for capture, use-for-this-tab with reload, and save actions.
 - **Hover / Focus:** Slightly darker green on hover; focus uses a visible 2px outline outside the control.
 - **Secondary:** Neutral surface with border for refresh, clear, and inspect actions.
 
@@ -162,7 +162,7 @@ Use tonal layering before shadows. Browser extension popups are small surfaces; 
 
 - **Style:** Compact current-tab panel in the popup.
 - **Content:** Local origin in monospace, selected profile name, profile source, and reload-needed state.
-- **State:** Missing selection shows a clear choose-profile action. A changed selection shows a reload action before claiming the page is using it.
+- **State:** Missing selection shows a clear choose-profile action. A changed selection immediately reloads the tab before claiming the page is using it.
 
 ### Origin Default Row
 

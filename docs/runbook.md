@@ -57,7 +57,7 @@ extension/dist
 3. Add background/service worker storage module.
 4. Add Desktop capture content script.
 5. Add localhost bridge injection.
-6. Add popup UI for capture, current-tab profile selection, reload, and profile details access.
+6. Add popup UI for capture, current-tab profile selection with automatic reload, and profile details access.
 7. Add options UI for profiles, optional origin defaults, and SDK message metadata.
 8. Add local verification fixtures or tests.
 
@@ -110,7 +110,7 @@ Manual provider path:
 2. Open the local page directly in a new tab.
 3. Open the extension popup on that tab.
 4. Choose the intended captured profile for the current tab.
-5. Click `Use For This Tab`, then `Reload Tab`.
+5. Click `Use For This Tab`; the popup should save the current-tab selection, reload the local tab, and close.
 6. Verify the app does not show the standalone-use redirect or modal.
 7. In browser devtools, confirm SDK calls receive successful responses.
    - `user.getInfo` returns the selected profile session.
@@ -119,16 +119,16 @@ Manual provider path:
    - `account.getWorkspaceQuota` returns the MVP safe zero-quota fallback.
    - known `event-bus` app events return a safe local no-op response.
 8. Confirm provider API requests include the expected session-derived authorization header.
-9. Switch the current tab to another profile, reload, and confirm behavior follows the new profile.
+9. Switch the current tab to another profile and confirm behavior follows the new profile after the automatic reload.
 10. Disable the extension and reload to confirm normal standalone failure behavior returns.
 
 ## Multi-cluster Verification
 
 1. Capture at least two profiles from different Sealos environments.
 2. Open `http://localhost:3000`.
-3. Use the popup to select the first profile for the current tab, then reload.
+3. Use the popup to select the first profile for the current tab.
 4. Confirm the page receives the first environment identity.
-5. Use the popup to switch the same tab to the second profile, then reload.
+5. Use the popup to switch the same tab to the second profile.
 6. Confirm the same local origin now receives the second environment identity.
 7. If optional origin defaults are enabled, confirm explicit current-tab selection still wins over the remembered default.
 

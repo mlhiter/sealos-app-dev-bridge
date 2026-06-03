@@ -35,8 +35,7 @@ Selected Profile
 
 Actions
   Capture current Desktop tab
-  Use selected profile for this tab
-  Reload tab
+  Use selected profile for this tab and reload
   Refresh profile
   Open details
 

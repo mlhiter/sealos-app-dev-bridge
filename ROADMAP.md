@@ -15,10 +15,10 @@ Goal: make one local provider app initialize successfully from a captured Deskto
 - Inject a `document_start` main-world bridge into `localhost` and `127.0.0.1`. Done in the SDK bridge milestone.
 - Respond to `user.getInfo`, `getLanguage`, and `getHostConfig`. Done in the SDK bridge milestone.
 - Add minimal popup showing capture state and the profile selected for the current tab. Done in the UI milestone.
-- Let the popup assign or switch the current tab profile, with a reload prompt when needed. Done in the UI milestone.
+- Let the popup assign or switch the current tab profile, with automatic reload after selection. Done in the UI milestone.
 - Verify with a local DevBox or DBProvider page. Fixture support is implemented; real provider verification remains manual.
 
-Merge condition: a developer can open a local app page directly, choose a captured profile for that tab from the popup, reload, and avoid the "not running in desktop" redirect path.
+Merge condition: a developer can open a local app page directly, choose a captured profile for that tab from the popup, and avoid the "not running in desktop" redirect path after the automatic reload.
 
 ## Phase 2: Multi-profile Workflow
 

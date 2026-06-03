@@ -151,7 +151,7 @@ Profile selection must be deterministic:
 
 This keeps the normal workflow tab-first: the same `http://localhost:3000` page can use staging in one debugging session and a test cluster in the next. Origin defaults are convenience automation for stable workflows, not the primary model.
 
-Changing the selected profile for a tab should prompt a reload in the MVP. Provider apps usually initialize their SDK session early, so hot-swapping a profile after app startup risks mixed old/new runtime state.
+Changing the selected profile for a tab reloads the local tab immediately in the MVP. Provider apps usually initialize their SDK session early, so hot-swapping a profile after app startup risks mixed old/new runtime state.
 
 ## Storage Boundary
 
@@ -190,7 +190,7 @@ The background service worker keeps a short `recentMessages` list for debugging.
 | No captured profile | SDK call returns a clear no-profile error |
 | Profile stale or expired | Popup warns and offers refresh from Desktop |
 | Local origin not allowed | No injection or explicit unsafe-origin error |
-| Local tab has no selected profile | Popup asks the user to choose a captured profile and reload |
+| Local tab has no selected profile | Popup asks the user to choose a captured profile; the selection action reloads the tab |
 | User switches cluster for the same port | New tab selection overrides remembered origin/default state after reload |
 | Unsupported event bus action | Return success with no-op only if safe, otherwise explain unsupported action |
 | Extension disabled | Provider app returns to normal standalone behavior |

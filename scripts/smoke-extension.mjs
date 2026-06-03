@@ -27,6 +27,7 @@ try {
         assertions: {
           capture: true,
           tabSelection: true,
+          popupAutoReload: enabled.loadCountAfterSelection,
           userGetInfo: enabled.results.user.success,
           language: enabled.results.language.data,
           hostConfig: enabled.results.hostConfig.data.cloud,
@@ -121,27 +122,23 @@ async function runWithExtension(origin) {
       consoleMessages.push(`${message.type()}: ${message.text()}`);
     });
     await appPage.goto(`${origin}/local-app.html`);
-
-    const selection = await extensionPage.evaluate(
-      async ({ appUrl, localOrigin, profileId }) => {
-        const tabs = await chrome.tabs.query({ url: appUrl });
-        if (!tabs[0]?.id) throw new Error('Local app tab not found');
-        return chrome.runtime.sendMessage({
-          type: 'bridge.selectTabProfile',
-          tabId: tabs[0].id,
-          localOrigin,
-          profileId
-        });
-      },
-      {
-        appUrl: `${origin}/local-app.html`,
-        localOrigin: origin,
-        profileId
-      }
+    const localLoadCountBeforeSelection = await appPage.evaluate(() => window.__localAppLoadCount);
+    await appPage.bringToFront();
+    const actionPopupPage = await openPopupPage(context, extensionPage, extensionId);
+    await actionPopupPage.setViewportSize({ width: 356, height: 600 });
+    await actionPopupPage.selectOption('#profile-select', profileId);
+    await Promise.all([
+      appPage.waitForFunction(
+        (previousCount) => window.__localAppLoadCount > previousCount,
+        localLoadCountBeforeSelection
+      ),
+      actionPopupPage.locator('#use-profile').click()
+    ]);
+    const localLoadCountAfterSelection = await appPage.evaluate(() => window.__localAppLoadCount);
+    assert(
+      localLoadCountAfterSelection === localLoadCountBeforeSelection + 1,
+      `Use For This Tab should reload the local app once: before=${localLoadCountBeforeSelection}, after=${localLoadCountAfterSelection}`
     );
-
-    assertOk(selection, 'select tab profile');
-    await appPage.reload();
 
     const results = await sendSdkSmokeMessages(appPage);
     const bridgeMessages = await appPage.evaluate(() => window.__bridgeMessages);
@@ -175,7 +172,8 @@ async function runWithExtension(origin) {
       extensionId,
       profileId,
       results,
-      recentMessages: state.data.recentMessages.length
+      recentMessages: state.data.recentMessages.length,
+      loadCountAfterSelection: localLoadCountAfterSelection
     };
   } finally {
     await context.close();
@@ -229,6 +227,21 @@ async function waitForServiceWorker(context) {
     await new Promise((resolve) => setTimeout(resolve, 250));
   }
   throw new Error('Extension service worker did not start');
+}
+
+async function openPopupPage(context, extensionPage, extensionId) {
+  const popupPromise = context.waitForEvent('page');
+  await extensionPage.evaluate(
+    (popupUrl) =>
+      chrome.tabs.create({
+        url: popupUrl,
+        active: false
+      }),
+    `chrome-extension://${extensionId}/popup/index.html`
+  );
+  const popupPage = await popupPromise;
+  await popupPage.waitForSelector('#use-profile');
+  return popupPage;
 }
 
 async function sendSdkSmokeMessages(page) {
@@ -294,6 +307,8 @@ async function startFixtureServer() {
       `<!doctype html>
 <title>Local App</title>
 <script>
+  window.__localAppLoadCount = Number(sessionStorage.getItem('localAppLoadCount') || '0') + 1;
+  sessionStorage.setItem('localAppLoadCount', String(window.__localAppLoadCount));
   window.__bridgeMessages = [];
   window.__sdkCallbacks = new Map();
   window.addEventListener('message', (event) => {

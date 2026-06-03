@@ -19,7 +19,6 @@ const profileSourceNode = query('#profile-source');
 const profileSelect = query<HTMLSelectElement>('#profile-select');
 const selectedProfileDetailsNode = query('#selected-profile-details');
 const useProfileButton = query<HTMLButtonElement>('#use-profile');
-const reloadButton = query<HTMLButtonElement>('#reload-tab');
 const captureButton = query<HTMLButtonElement>('#capture-profile');
 const captureNoteNode = query('#capture-note');
 const effectiveProfilePanelNode = query('#effective-profile-panel');
@@ -134,7 +133,6 @@ function syncControlState() {
   const selectedProfile = Boolean(profileSelect.value);
 
   useProfileButton.disabled = !hasProfiles || !isLocalTab || !selectedProfile;
-  reloadButton.disabled = activeTab?.ok !== true;
   captureButton.disabled = activeTab?.ok !== true || isLocalTab;
   if (activeTab?.ok === true && isLocalTab) {
     captureNoteNode.textContent = 'Switch to an authenticated Sealos Desktop tab to capture a profile.';
@@ -158,8 +156,9 @@ async function useProfileForCurrentTab() {
   }
 
   resolution = response.data;
-  renderResolution(response.data);
-  setStatus('Profile selected, reload tab');
+  setStatus('Profile selected, reloading');
+  await chrome.tabs.reload(activeTab.tabId);
+  window.close();
 }
 
 async function captureCurrentTab() {
@@ -187,12 +186,6 @@ async function captureCurrentTab() {
   await render();
 }
 
-async function reloadCurrentTab() {
-  if (activeTab?.ok !== true) return;
-  await chrome.tabs.reload(activeTab.tabId);
-  window.close();
-}
-
 function setStatus(value: string) {
   statusNode.textContent = value;
 }
@@ -207,7 +200,6 @@ function query<T extends HTMLElement = HTMLElement>(selector: string): T {
 
 useProfileButton.addEventListener('click', () => void useProfileForCurrentTab());
 captureButton.addEventListener('click', () => void captureCurrentTab());
-reloadButton.addEventListener('click', () => void reloadCurrentTab());
 openOptionsButton.addEventListener('click', () => void chrome.runtime.openOptionsPage());
 profileSelect.addEventListener('change', () => {
   renderSelectedProfileDetails();
