@@ -10,6 +10,7 @@ window.addEventListener('message', (event: MessageEvent) => {
   const data = event.data;
   if (data?.source === CHANNEL_SOURCE) {
     if (data.type === 'sdk-response') {
+      event.stopImmediatePropagation();
       handleSdkResponse(data);
     }
     return;
@@ -17,6 +18,7 @@ window.addEventListener('message', (event: MessageEvent) => {
 
   if (event.source !== window) return;
   if (!isSdkRequestMessage(data)) return;
+  event.stopImmediatePropagation();
 
   const requestId = createRequestId(data.messageId);
   pendingRequests.add(requestId);
@@ -29,7 +31,7 @@ window.addEventListener('message', (event: MessageEvent) => {
   };
 
   window.postMessage(message, window.location.origin);
-});
+}, true);
 
 window.postMessage(
   {

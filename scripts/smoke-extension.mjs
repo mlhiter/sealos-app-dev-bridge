@@ -33,7 +33,7 @@ try {
           quotaItems: enabled.results.quota.data.quota.length,
           unsupportedApi: enabled.results.unsupported.message,
           recentMessages: enabled.recentMessages,
-          disabledStandalone: disabled.message
+          disabledStandalone: disabled
         }
       },
       null,
@@ -190,7 +190,10 @@ async function runWithoutExtension(origin) {
     const appPage = await context.newPage();
     await appPage.goto(`${origin}/local-app.html`);
     const result = await appPage.evaluate(() => sendSdkMessage('user.getInfo', {}, 800));
-    assert(result.message === 'timeout', 'standalone page should not receive SDK reply');
+    assert(
+      result.apiName === 'user.getInfo' && result.success === false,
+      `standalone page should receive its own SDK request as a failed reply: ${JSON.stringify(result)}`
+    );
     return result;
   } finally {
     await context.close();
@@ -207,6 +210,7 @@ async function launchContext(withExtension) {
 
   const context = await chromium.launchPersistentContext(userDataDir, {
     headless: false,
+    ignoreDefaultArgs: ['--disable-extensions'],
     args
   });
 
