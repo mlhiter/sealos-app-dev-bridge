@@ -79,6 +79,16 @@ export function formatProfileMeta(profile: ProfileSummary) {
   return `${profile.desktopOrigin} · ${profile.user.nsid} · ${profile.user.name}`;
 }
 
+export function getProfileDetailRows(profile: ProfileSummary) {
+  return [
+    ['Desktop origin', profile.desktopOrigin],
+    ['Region', profile.cloud.regionUID],
+    ['Workspace / nsid', profile.user.nsid],
+    ['User', profile.user.name],
+    ['Captured', new Date(profile.capturedAt).toLocaleString()]
+  ] as const;
+}
+
 export function formatResolution(resolution: EffectiveProfileResolution) {
   if (resolution.source === 'none') return resolution.error;
   return `${resolution.source}: ${formatProfileLabel(resolution.profile)}`;

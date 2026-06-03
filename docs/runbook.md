@@ -2,7 +2,7 @@
 
 ## Current Status
 
-As of 2026-06-02, this project has a TypeScript Chrome MV3 MVP with profile storage, Desktop session capture, tab-first profile resolution, main-world SDK bridge behavior, popup/options workflows, package scripts, a Vite build pipeline, Node test runner tests executed through `tsx`, and background/content/injected entrypoints.
+As of 2026-06-03, this project has a TypeScript Chrome MV3 MVP with profile storage, Desktop session capture, tab-first profile resolution, main-world SDK bridge behavior, popup/options workflows, selected-profile details in the popup, package scripts, a Vite build pipeline, Node test runner tests executed through `tsx`, and background/content/injected entrypoints.
 
 ## Local Commands
 
@@ -78,7 +78,7 @@ extension/dist
 4. Capture the current profile.
    - The popup action is labeled `Capture Current Desktop Tab`.
    - Capturing automatically trusts the current Desktop origin.
-5. Confirm the resolved profile summary shows:
+5. Confirm the selected profile details under the profile selector show:
    - Desktop origin
    - region UID
    - workspace or nsid

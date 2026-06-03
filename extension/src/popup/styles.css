@@ -71,7 +71,8 @@ h1 {
 }
 
 code,
-.summary-block span {
+.summary-block span,
+.profile-detail-list dd {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 12px;
   overflow-wrap: anywhere;
@@ -121,4 +122,44 @@ select:disabled {
 .summary-block {
   display: grid;
   gap: 4px;
+}
+
+.profile-detail-block {
+  display: grid;
+  gap: 8px;
+  border: 1px solid #d6dfdb;
+  border-radius: 6px;
+  background: #f7f8f8;
+  padding: 8px;
+}
+
+.profile-detail-block strong,
+.summary-block strong {
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.profile-detail-list {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+}
+
+.profile-detail-list div {
+  display: grid;
+  grid-template-columns: minmax(86px, 0.44fr) minmax(0, 1fr);
+  gap: 8px;
+  align-items: start;
+}
+
+.profile-detail-list dt,
+.profile-detail-list dd {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.35;
+}
+
+.profile-detail-list dt {
+  color: #596760;
+  font-weight: 600;
 }

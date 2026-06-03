@@ -26,6 +26,14 @@ Current Tab
   profile source
   effective profile
 
+Selected Profile
+  selected profile details visible under the selector
+  Desktop origin
+  region UID
+  workspace / nsid
+  user
+  captured time
+
 Actions
   Capture current Desktop tab
   Use selected profile for this tab
@@ -34,7 +42,8 @@ Actions
   Refresh profile
   Open options
 
-Profile Summary
+Effective Profile
+  actual profile source for the current localhost tab
   Desktop origin
   region UID
   workspace / nsid

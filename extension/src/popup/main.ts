@@ -5,6 +5,7 @@ import {
   formatProfileLabel,
   formatProfileMeta,
   formatResolution,
+  getProfileDetailRows,
   getActiveTabInfo,
   loadBridgeState,
   resolveCurrentTabProfile,
@@ -16,6 +17,7 @@ const tabKindNode = query('#tab-kind');
 const originNode = query('#current-origin');
 const profileSourceNode = query('#profile-source');
 const profileSelect = query<HTMLSelectElement>('#profile-select');
+const selectedProfileDetailsNode = query('#selected-profile-details');
 const useProfileButton = query<HTMLButtonElement>('#use-profile');
 const reloadButton = query<HTMLButtonElement>('#reload-tab');
 const rememberOriginButton = query<HTMLButtonElement>('#remember-origin');
@@ -66,6 +68,8 @@ function renderProfiles(profiles: ProfileSummary[]) {
   if (preferred) {
     profileSelect.value = preferred;
   }
+
+  renderSelectedProfileDetails();
 }
 
 function renderTab(tab: Awaited<ReturnType<typeof getActiveTabInfo>>) {
@@ -88,10 +92,37 @@ function renderResolution(nextResolution: EffectiveProfileResolution) {
 
   const profile = nextResolution.profile;
   profileSelect.value = profile.id;
+  renderSelectedProfileDetails();
   profileSummaryNode.innerHTML = `
     <strong>${escapeHtml(profile.name)}</strong>
     <span>${escapeHtml(formatProfileMeta(profile))}</span>
     <span>Captured ${escapeHtml(new Date(profile.capturedAt).toLocaleString())}</span>
+  `;
+}
+
+function renderSelectedProfileDetails() {
+  const profile = state?.profiles.find((candidate) => candidate.id === profileSelect.value);
+  if (!profile) {
+    selectedProfileDetailsNode.textContent = state?.profiles.length
+      ? 'Choose a captured profile.'
+      : 'No profile selected.';
+    return;
+  }
+
+  selectedProfileDetailsNode.innerHTML = `
+    <strong>${escapeHtml(profile.name)}</strong>
+    <dl class="profile-detail-list">
+      ${getProfileDetailRows(profile)
+        .map(
+          ([label, value]) => `
+            <div>
+              <dt>${escapeHtml(label)}</dt>
+              <dd>${escapeHtml(value)}</dd>
+            </div>
+          `
+        )
+        .join('')}
+    </dl>
   `;
 }
 
@@ -190,7 +221,10 @@ rememberOriginButton.addEventListener('click', () => void rememberOriginDefault(
 captureButton.addEventListener('click', () => void captureCurrentTab());
 reloadButton.addEventListener('click', () => void reloadCurrentTab());
 openOptionsButton.addEventListener('click', () => void chrome.runtime.openOptionsPage());
-profileSelect.addEventListener('change', syncControlState);
+profileSelect.addEventListener('change', () => {
+  renderSelectedProfileDetails();
+  syncControlState();
+});
 
 void render().catch((error: unknown) => {
   setStatus(error instanceof Error ? error.message : 'Popup failed');

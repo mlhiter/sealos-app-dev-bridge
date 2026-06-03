@@ -68,6 +68,28 @@ async function runWithExtension(origin) {
     assertOk(capture, 'capture profile');
     const profileId = capture.data.profile.id;
 
+    const popupPage = await context.newPage();
+    await popupPage.goto(`chrome-extension://${extensionId}/popup/index.html`);
+    await popupPage.waitForSelector('#selected-profile-details');
+    const selectedProfileDetails = await popupPage.locator('#selected-profile-details').innerText();
+    assert(
+      selectedProfileDetails.includes(origin),
+      `popup selected profile details should show Desktop origin: ${selectedProfileDetails}`
+    );
+    assert(
+      selectedProfileDetails.includes('smoke-region'),
+      `popup selected profile details should show region: ${selectedProfileDetails}`
+    );
+    assert(
+      selectedProfileDetails.includes('workspace-smoke'),
+      `popup selected profile details should show workspace/nsid: ${selectedProfileDetails}`
+    );
+    assert(
+      selectedProfileDetails.includes('Smoke Ada'),
+      `popup selected profile details should show user: ${selectedProfileDetails}`
+    );
+    await popupPage.close();
+
     const appPage = await context.newPage();
     const consoleMessages = [];
     appPage.on('console', (message) => {
