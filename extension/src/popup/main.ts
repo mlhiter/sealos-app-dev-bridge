@@ -20,7 +20,6 @@ const selectedProfileDetailsNode = query('#selected-profile-details');
 const useProfileButton = query<HTMLButtonElement>('#use-profile');
 const captureButton = query<HTMLButtonElement>('#capture-profile');
 const captureNoteNode = query('#capture-note');
-const openOptionsButton = query<HTMLButtonElement>('#open-options');
 
 let state: PublicBridgeState | undefined;
 let activeTab: Awaited<ReturnType<typeof getActiveTabInfo>> | undefined;
@@ -42,6 +41,7 @@ async function render() {
     profileSourceNode.textContent = activeTab.ok
       ? 'Open a localhost app tab to resolve a profile'
       : activeTab.message;
+    profileSourceNode.className = 'meta-line state-muted';
   }
 
   syncControlState();
@@ -71,15 +71,22 @@ function renderTab(tab: Awaited<ReturnType<typeof getActiveTabInfo>>) {
   if (!tab.ok) {
     originNode.textContent = tab.message;
     tabKindNode.textContent = 'No Tab';
+    tabKindNode.className = 'status-pill is-danger';
+    originNode.className = 'tab-origin state-muted';
     return;
   }
 
   originNode.textContent = tab.origin;
-  tabKindNode.textContent = tab.isLocal ? 'Local App' : 'Capture Source';
+  originNode.className = `tab-origin ${tab.isLocal ? 'state-ready' : ''}`;
+  tabKindNode.textContent = tab.isLocal ? 'Local App' : 'Source Tab';
+  tabKindNode.className = `status-pill ${tab.isLocal ? 'is-local' : 'is-source'}`;
 }
 
 function renderResolution(nextResolution: EffectiveProfileResolution) {
   profileSourceNode.textContent = formatResolution(nextResolution);
+  profileSourceNode.className = `meta-line ${
+    nextResolution.source === 'none' ? 'state-danger' : 'state-ready'
+  }`;
   if (nextResolution.source === 'none') {
     return;
   }
@@ -92,14 +99,19 @@ function renderResolution(nextResolution: EffectiveProfileResolution) {
 function renderSelectedProfileDetails() {
   const profile = state?.profiles.find((candidate) => candidate.id === profileSelect.value);
   if (!profile) {
+    selectedProfileDetailsNode.className = 'profile-detail-block is-empty';
     selectedProfileDetailsNode.textContent = state?.profiles.length
-      ? 'Choose a captured profile.'
-      : 'No profile selected.';
+      ? 'Choose a captured profile to inspect its Desktop origin, region, and workspace.'
+      : 'No captured profiles yet.';
     return;
   }
 
+  selectedProfileDetailsNode.className = 'profile-detail-block';
   selectedProfileDetailsNode.innerHTML = `
-    <strong>${escapeHtml(formatProfileLabel(profile))}</strong>
+    <div class="profile-summary">
+      <strong>${escapeHtml(formatProfileLabel(profile))}</strong>
+      <span>${profile.hasKubeconfig ? 'Session ready' : 'Session incomplete'}</span>
+    </div>
     <dl class="profile-detail-list">
       ${getProfileDetailRows(profile)
         .map(
@@ -125,7 +137,7 @@ function syncControlState() {
   if (activeTab?.ok === true && isLocalTab) {
     captureNoteNode.textContent = 'Switch to an authenticated Sealos Desktop tab to capture a profile.';
   } else if (activeTab?.ok === true) {
-    captureNoteNode.textContent = 'Capture only from an authenticated Sealos Desktop tab.';
+    captureNoteNode.textContent = 'Capture only from a real authenticated Sealos Desktop page.';
   }
 }
 
@@ -188,7 +200,6 @@ function query<T extends HTMLElement = HTMLElement>(selector: string): T {
 
 useProfileButton.addEventListener('click', () => void useProfileForCurrentTab());
 captureButton.addEventListener('click', () => void captureCurrentTab());
-openOptionsButton.addEventListener('click', () => void chrome.runtime.openOptionsPage());
 profileSelect.addEventListener('change', () => {
   renderSelectedProfileDetails();
   syncControlState();

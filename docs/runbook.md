@@ -76,7 +76,7 @@ release/sealos-app-dev-bridge-<version>.zip.sha256
 3. Add background/service worker storage module.
 4. Add Desktop capture content script.
 5. Add localhost bridge injection.
-6. Add popup UI for capture, current-tab profile selection with automatic reload, and profile details access.
+6. Add popup UI for capture, current-tab profile selection with automatic reload, and selected-profile details display.
 7. Add options UI for profiles, optional origin defaults, and SDK message metadata.
 8. Add local verification fixtures or tests.
 
@@ -145,7 +145,7 @@ Use this only for local preflight or debugging the release asset:
 2. Log in normally.
 3. Click the extension popup.
 4. Capture the current profile.
-   - The popup action is labeled `Capture Current Desktop Tab`.
+   - The popup action is labeled `Capture Desktop Tab`.
    - Capturing automatically trusts the current Desktop origin.
 5. Confirm the profile selector itself shows a short human-readable name plus Desktop host, not a profile ID or long region UID.
 6. Confirm the selected profile details under the profile selector show:

@@ -83,16 +83,22 @@ export function formatProfileMeta(profile: ProfileSummary) {
 
 export function getProfileDetailRows(profile: ProfileSummary) {
   return [
-    ['Desktop origin', profile.desktopOrigin],
+    ['Desktop', profile.desktopOrigin],
     ['Region', profile.cloud.regionUID],
-    ['Workspace / nsid', profile.user.nsid],
+    ['Workspace', profile.user.nsid],
     ['Captured', new Date(profile.capturedAt).toLocaleString()]
   ] as const;
 }
 
 export function formatResolution(resolution: EffectiveProfileResolution) {
   if (resolution.source === 'none') return resolution.error;
-  return `${resolution.source}: ${formatProfileLabel(resolution.profile)}`;
+  const sourceLabels = {
+    'tab-selection': 'Selected for this tab',
+    'origin-default': 'Remembered for this origin',
+    'active-profile': 'Using active fallback'
+  } satisfies Record<Exclude<EffectiveProfileResolution['source'], 'none'>, string>;
+
+  return sourceLabels[resolution.source];
 }
 
 export function escapeHtml(value: string) {

@@ -13,22 +13,21 @@
           <h1>Sealos Bridge</h1>
           <p id="status" class="status-line">Loading</p>
         </div>
-        <button id="open-options" class="icon-button" type="button" title="Open profile details">Details</button>
+        <span id="tab-kind" class="status-pill">Unknown</span>
       </header>
 
       <section class="state-panel">
         <div class="panel-head">
-          <span class="label">Current Tab</span>
-          <span id="tab-kind" class="status-pill">Unknown</span>
+          <span class="eyebrow">Current tab</span>
         </div>
-        <code id="current-origin">No tab detected</code>
+        <code id="current-origin" class="tab-origin">No tab detected</code>
         <span id="profile-source" class="meta-line">No profile resolved</span>
       </section>
 
       <section class="control-group">
         <div class="field-head">
-          <label class="label" for="profile-select">Profile</label>
-          <span class="meta-line">Select by user</span>
+          <label class="eyebrow" for="profile-select">Profile</label>
+          <span class="meta-line">Manual tab selection</span>
         </div>
         <select id="profile-select"></select>
         <div id="selected-profile-details" class="profile-detail-block">No profile selected.</div>
@@ -36,7 +35,7 @@
       </section>
 
       <section class="capture-panel">
-        <button id="capture-profile" class="primary-button" type="button">Capture Current Desktop Tab</button>
+        <button id="capture-profile" class="secondary-button" type="button">Capture Desktop Tab</button>
         <p id="capture-note" class="meta-line">Open an authenticated Sealos Desktop tab before capturing.</p>
       </section>
     </main>

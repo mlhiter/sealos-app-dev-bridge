@@ -34,10 +34,9 @@ Selected Profile
   captured time
 
 Actions
-  Capture current Desktop tab
+  Capture Desktop tab
   Use selected profile for this tab and reload
   Refresh profile
-  Open details
 ```
 
 ## Options Page

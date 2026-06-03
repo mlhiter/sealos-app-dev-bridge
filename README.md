@@ -93,7 +93,7 @@ extension/dist
 
 1. Open a real Sealos Desktop page and log in normally.
 2. Open the extension popup on that Desktop tab.
-3. Click **Capture Current Desktop Tab**.
+3. Click **Capture Desktop Tab**.
 4. Confirm the popup shows the profile name, Desktop origin, region UID, workspace or nsid, user, and captured time.
 
 > [!WARNING]
