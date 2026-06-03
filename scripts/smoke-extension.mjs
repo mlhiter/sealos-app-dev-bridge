@@ -69,8 +69,20 @@ async function runWithExtension(origin) {
     const profileId = capture.data.profile.id;
 
     const popupPage = await context.newPage();
+    await popupPage.setViewportSize({ width: 356, height: 600 });
     await popupPage.goto(`chrome-extension://${extensionId}/popup/index.html`);
     await popupPage.waitForSelector('#selected-profile-details');
+    const selectedProfileLabel = await popupPage
+      .locator('#profile-select')
+      .evaluate((select) => select.options[select.selectedIndex]?.textContent ?? '');
+    assert(
+      selectedProfileLabel === 'Smoke Ada',
+      `popup profile option should show only the profile name: ${selectedProfileLabel}`
+    );
+    assert(
+      !selectedProfileLabel.includes('smoke-region') && !selectedProfileLabel.includes(profileId),
+      `popup profile option should not show region or profile id: ${selectedProfileLabel}`
+    );
     const selectedProfileDetails = await popupPage.locator('#selected-profile-details').innerText();
     assert(
       selectedProfileDetails.includes(origin),
@@ -87,6 +99,18 @@ async function runWithExtension(origin) {
     assert(
       selectedProfileDetails.includes('Smoke Ada'),
       `popup selected profile details should show user: ${selectedProfileDetails}`
+    );
+    const popupMetrics = await popupPage.evaluate(() => {
+      const shell = document.querySelector('.popup-shell');
+      if (!(shell instanceof HTMLElement)) throw new Error('Popup shell missing');
+      return {
+        shellHeight: Math.ceil(shell.getBoundingClientRect().height),
+        viewportHeight: window.innerHeight
+      };
+    });
+    assert(
+      popupMetrics.shellHeight <= popupMetrics.viewportHeight,
+      `popup should fit without vertical scrolling: ${JSON.stringify(popupMetrics)}`
     );
     await popupPage.close();
 
@@ -159,7 +183,8 @@ async function runWithExtension(origin) {
 }
 
 async function runWithoutExtension(origin) {
-  const { context, userDataDir } = await launchContext(false);
+  const browser = await chromium.launch({ headless: true });
+  const context = await browser.newContext();
   try {
     const appPage = await context.newPage();
     await appPage.goto(`${origin}/local-app.html`);
@@ -168,7 +193,7 @@ async function runWithoutExtension(origin) {
     return result;
   } finally {
     await context.close();
-    await rm(userDataDir, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
+    await browser.close();
   }
 }
 
@@ -177,8 +202,6 @@ async function launchContext(withExtension) {
   const args = ['--window-position=2400,80', '--window-size=1200,900'];
   if (withExtension) {
     args.push(`--disable-extensions-except=${extensionDir}`, `--load-extension=${extensionDir}`);
-  } else {
-    args.push('--disable-extensions');
   }
 
   const context = await chromium.launchPersistentContext(userDataDir, {

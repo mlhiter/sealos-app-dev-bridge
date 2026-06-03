@@ -23,6 +23,7 @@ const reloadButton = query<HTMLButtonElement>('#reload-tab');
 const rememberOriginButton = query<HTMLButtonElement>('#remember-origin');
 const captureButton = query<HTMLButtonElement>('#capture-profile');
 const captureNoteNode = query('#capture-note');
+const effectiveProfilePanelNode = query('#effective-profile-panel');
 const profileSummaryNode = query('#profile-summary');
 const openOptionsButton = query<HTMLButtonElement>('#open-options');
 
@@ -39,9 +40,11 @@ async function render() {
   renderTab(activeTab);
 
   if (activeTab.ok && activeTab.isLocal) {
+    effectiveProfilePanelNode.hidden = false;
     resolution = await resolveCurrentTabProfile(activeTab);
     renderResolution(resolution);
   } else {
+    effectiveProfilePanelNode.hidden = true;
     resolution = undefined;
     profileSourceNode.textContent = activeTab.ok
       ? 'Open a localhost app tab to resolve a profile'
@@ -110,7 +113,7 @@ function renderSelectedProfileDetails() {
   }
 
   selectedProfileDetailsNode.innerHTML = `
-    <strong>${escapeHtml(profile.name)}</strong>
+    <strong>${escapeHtml(formatProfileLabel(profile))}</strong>
     <dl class="profile-detail-list">
       ${getProfileDetailRows(profile)
         .map(

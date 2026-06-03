@@ -72,7 +72,7 @@ export async function resolveCurrentTabProfile(
 }
 
 export function formatProfileLabel(profile: ProfileSummary) {
-  return `${profile.name} (${profile.cloud.regionUID})`;
+  return profile.user.name || profile.name;
 }
 
 export function formatProfileMeta(profile: ProfileSummary) {
@@ -84,7 +84,6 @@ export function getProfileDetailRows(profile: ProfileSummary) {
     ['Desktop origin', profile.desktopOrigin],
     ['Region', profile.cloud.regionUID],
     ['Workspace / nsid', profile.user.nsid],
-    ['User', profile.user.name],
     ['Captured', new Date(profile.capturedAt).toLocaleString()]
   ] as const;
 }

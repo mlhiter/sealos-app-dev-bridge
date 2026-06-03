@@ -6,8 +6,9 @@
 }
 
 body {
-  width: 380px;
+  width: 356px;
   margin: 0;
+  overflow: hidden;
 }
 
 button,
@@ -17,12 +18,13 @@ select {
 
 .popup-shell {
   display: grid;
-  gap: 12px;
-  padding: 14px;
+  gap: 9px;
+  padding: 12px;
 }
 
 .popup-header,
 .panel-head,
+.field-head,
 .button-row {
   display: flex;
   align-items: center;
@@ -57,11 +59,29 @@ h1 {
 .state-panel,
 .control-group {
   display: grid;
-  gap: 8px;
+  gap: 7px;
   border: 1px solid #c6d0cb;
   border-radius: 6px;
   background: #eef3f1;
-  padding: 10px;
+  padding: 9px;
+}
+
+.capture-panel {
+  display: grid;
+  gap: 6px;
+  border: 1px solid #d6dfdb;
+  border-radius: 6px;
+  background: #f7f8f8;
+  padding: 8px;
+}
+
+.compact-panel {
+  gap: 5px;
+  padding-block: 8px;
+}
+
+[hidden] {
+  display: none !important;
 }
 
 .label {
@@ -84,7 +104,8 @@ select {
   border-radius: 6px;
   background: #f7f8f8;
   color: #18201d;
-  padding: 7px 9px;
+  padding: 6px 8px;
+  font-weight: 600;
 }
 
 .primary-button,
@@ -126,11 +147,11 @@ select:disabled {
 
 .profile-detail-block {
   display: grid;
-  gap: 8px;
+  gap: 6px;
   border: 1px solid #d6dfdb;
   border-radius: 6px;
   background: #f7f8f8;
-  padding: 8px;
+  padding: 8px 9px;
 }
 
 .profile-detail-block strong,
@@ -141,13 +162,13 @@ select:disabled {
 
 .profile-detail-list {
   display: grid;
-  gap: 6px;
+  gap: 4px;
   margin: 0;
 }
 
 .profile-detail-list div {
   display: grid;
-  grid-template-columns: minmax(86px, 0.44fr) minmax(0, 1fr);
+  grid-template-columns: 96px minmax(0, 1fr);
   gap: 8px;
   align-items: start;
 }

@@ -24,14 +24,13 @@ Header
 Current Tab
   origin
   profile source
-  effective profile
 
 Selected Profile
+  select label with profile name only
   selected profile details visible under the selector
   Desktop origin
   region UID
   workspace / nsid
-  user
   captured time
 
 Actions
@@ -43,6 +42,7 @@ Actions
   Open options
 
 Effective Profile
+  hidden on non-local tabs
   actual profile source for the current localhost tab
   Desktop origin
   region UID
