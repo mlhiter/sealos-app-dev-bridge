@@ -1,4 +1,4 @@
-# Sealos App Dev Bridge
+<h1 align="center">Sealos App Dev Bridge</h1>
 
 <div align="center">
 
