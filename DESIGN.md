@@ -155,7 +155,7 @@ Use tonal layering before shadows. Browser extension popups are small surfaces; 
 ### Profile Selector
 
 - **Style:** Native select or listbox behavior with active profile highlighted.
-- **Content:** The select label shows only the human-readable profile name, usually the captured user. The compact details block below it shows Desktop origin, region, workspace/nsid, and captured time for confirmation.
+- **Content:** The select label shows the captured user plus the Desktop host, for example `admin @ staging-usw-1.sealos.io`. The compact details block below it shows Desktop origin, region, workspace/nsid, and captured time for confirmation.
 - **State:** Expired or stale profiles show warning text and an amber status marker.
 
 ### Current Tab Profile

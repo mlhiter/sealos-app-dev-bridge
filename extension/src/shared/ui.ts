@@ -72,7 +72,9 @@ export async function resolveCurrentTabProfile(
 }
 
 export function formatProfileLabel(profile: ProfileSummary) {
-  return profile.user.name || profile.name;
+  const name = profile.user.name || profile.name;
+  const originHost = getOriginHost(profile.desktopOrigin);
+  return originHost ? `${name} @ ${originHost}` : name;
 }
 
 export function formatProfileMeta(profile: ProfileSummary) {
@@ -100,4 +102,12 @@ export function escapeHtml(value: string) {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#039;');
+}
+
+function getOriginHost(origin: string) {
+  try {
+    return new URL(origin).host;
+  } catch {
+    return '';
+  }
 }

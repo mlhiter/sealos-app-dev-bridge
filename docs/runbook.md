@@ -78,7 +78,7 @@ extension/dist
 4. Capture the current profile.
    - The popup action is labeled `Capture Current Desktop Tab`.
    - Capturing automatically trusts the current Desktop origin.
-5. Confirm the profile selector itself shows a short human-readable name, not a profile ID or long region UID.
+5. Confirm the profile selector itself shows a short human-readable name plus Desktop host, not a profile ID or long region UID.
 6. Confirm the selected profile details under the profile selector show:
    - Desktop origin
    - region UID

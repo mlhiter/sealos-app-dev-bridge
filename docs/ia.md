@@ -26,7 +26,7 @@ Current Tab
   profile source
 
 Selected Profile
-  select label with profile name only
+  select label with profile name and Desktop host
   selected profile details visible under the selector
   Desktop origin
   region UID

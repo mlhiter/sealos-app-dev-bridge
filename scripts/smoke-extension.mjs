@@ -75,13 +75,14 @@ async function runWithExtension(origin) {
     const selectedProfileLabel = await popupPage
       .locator('#profile-select')
       .evaluate((select) => select.options[select.selectedIndex]?.textContent ?? '');
+    const originHost = new URL(origin).host;
     assert(
-      selectedProfileLabel === 'Smoke Ada',
-      `popup profile option should show only the profile name: ${selectedProfileLabel}`
+      selectedProfileLabel === `Smoke Ada @ ${originHost}`,
+      `popup profile option should show the profile name and Desktop host: ${selectedProfileLabel}`
     );
     assert(
       !selectedProfileLabel.includes('smoke-region') && !selectedProfileLabel.includes(profileId),
-      `popup profile option should not show region or profile id: ${selectedProfileLabel}`
+      `popup profile option should not show region UID or profile id: ${selectedProfileLabel}`
     );
     const selectedProfileDetails = await popupPage.locator('#selected-profile-details').innerText();
     assert(
