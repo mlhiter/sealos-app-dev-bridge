@@ -38,15 +38,6 @@ Actions
   Use selected profile for this tab and reload
   Refresh profile
   Open details
-
-Effective Profile
-  hidden on non-local tabs
-  actual profile source for the current localhost tab
-  Desktop origin
-  region UID
-  workspace / nsid
-  user
-  captured time
 ```
 
 ## Options Page

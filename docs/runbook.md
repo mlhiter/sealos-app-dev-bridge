@@ -148,7 +148,7 @@ Manual provider path:
 - Confirm current-tab selection is not stale.
 - Confirm local origin includes the correct protocol and port.
 - Confirm remembered origin default or active profile fallback is not being used unexpectedly.
-- Confirm the popup displays the effective profile for the current tab.
+- Confirm the Current Tab panel shows the expected profile source for the current tab.
 
 ### API calls are unauthorized
 

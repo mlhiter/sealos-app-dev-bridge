@@ -74,11 +74,6 @@ h1 {
   padding: 8px;
 }
 
-.compact-panel {
-  gap: 5px;
-  padding-block: 8px;
-}
-
 [hidden] {
   display: none !important;
 }
@@ -90,7 +85,6 @@ h1 {
 }
 
 code,
-.summary-block span,
 .profile-detail-list dd {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   font-size: 12px;
@@ -135,11 +129,6 @@ select:disabled {
   opacity: 0.55;
 }
 
-.summary-block {
-  display: grid;
-  gap: 4px;
-}
-
 .profile-detail-block {
   display: grid;
   gap: 6px;
@@ -149,8 +138,7 @@ select:disabled {
   padding: 8px 9px;
 }
 
-.profile-detail-block strong,
-.summary-block strong {
+.profile-detail-block strong {
   font-size: 12px;
   line-height: 1.35;
 }

@@ -3,7 +3,6 @@ import type { EffectiveProfileResolution, ProfileSummary } from '../shared/types
 import {
   escapeHtml,
   formatProfileLabel,
-  formatProfileMeta,
   formatResolution,
   getProfileDetailRows,
   getActiveTabInfo,
@@ -21,8 +20,6 @@ const selectedProfileDetailsNode = query('#selected-profile-details');
 const useProfileButton = query<HTMLButtonElement>('#use-profile');
 const captureButton = query<HTMLButtonElement>('#capture-profile');
 const captureNoteNode = query('#capture-note');
-const effectiveProfilePanelNode = query('#effective-profile-panel');
-const profileSummaryNode = query('#profile-summary');
 const openOptionsButton = query<HTMLButtonElement>('#open-options');
 
 let state: PublicBridgeState | undefined;
@@ -38,16 +35,13 @@ async function render() {
   renderTab(activeTab);
 
   if (activeTab.ok && activeTab.isLocal) {
-    effectiveProfilePanelNode.hidden = false;
     resolution = await resolveCurrentTabProfile(activeTab);
     renderResolution(resolution);
   } else {
-    effectiveProfilePanelNode.hidden = true;
     resolution = undefined;
     profileSourceNode.textContent = activeTab.ok
       ? 'Open a localhost app tab to resolve a profile'
       : activeTab.message;
-    profileSummaryNode.textContent = 'No local tab selected.';
   }
 
   syncControlState();
@@ -87,18 +81,12 @@ function renderTab(tab: Awaited<ReturnType<typeof getActiveTabInfo>>) {
 function renderResolution(nextResolution: EffectiveProfileResolution) {
   profileSourceNode.textContent = formatResolution(nextResolution);
   if (nextResolution.source === 'none') {
-    profileSummaryNode.textContent = 'Choose a captured profile for this tab.';
     return;
   }
 
   const profile = nextResolution.profile;
   profileSelect.value = profile.id;
   renderSelectedProfileDetails();
-  profileSummaryNode.innerHTML = `
-    <strong>${escapeHtml(profile.name)}</strong>
-    <span>${escapeHtml(formatProfileMeta(profile))}</span>
-    <span>Captured ${escapeHtml(new Date(profile.capturedAt).toLocaleString())}</span>
-  `;
 }
 
 function renderSelectedProfileDetails() {
