@@ -144,7 +144,7 @@ npm run build
 npm run smoke:extension
 ```
 
-The smoke test launches a temporary Chromium profile, loads `extension/dist`, captures a fake Desktop profile, selects it for a localhost tab, verifies SDK replies, then verifies the same page times out when the extension is disabled.
+The smoke test launches a temporary Chromium profile, loads `extension/dist`, captures a fake Desktop profile, selects it for a localhost tab, verifies SDK replies, then verifies the same page returns to the real standalone SDK failure shape when the extension is disabled.
 
 ## Safety Model
 

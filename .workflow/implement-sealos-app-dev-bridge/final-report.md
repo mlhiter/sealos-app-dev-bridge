@@ -52,7 +52,7 @@ The repository now has an unpackable extension scaffold, profile capture and sto
 
 - Tried to connect to the Codex Chrome automation channel on 2026-06-02; it reported `Browser is not available: extension`.
 - The installed Google Chrome binary rejected command-line unpacked loading with `--load-extension is not allowed in Google Chrome, ignoring`.
-- Added and ran `npm run smoke:extension` through Playwright Chromium. It loads `extension/dist`, captures a fake Desktop profile, selects it for a localhost tab, verifies SDK replies, and verifies standalone timeout when the extension is disabled.
+- Added and ran `npm run smoke:extension` through Playwright Chromium. It loads `extension/dist`, captures a fake Desktop profile, selects it for a localhost tab, verifies SDK replies, and verifies the standalone SDK self-message failure shape when the extension is disabled.
 
 ## Remaining Risks
 

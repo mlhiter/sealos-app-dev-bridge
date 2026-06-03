@@ -99,7 +99,7 @@ Automated fixture path:
    ```bash
    npm run smoke:extension
    ```
-3. Confirm the JSON output reports `ok: true`.
+3. Confirm the JSON output reports `ok: true`, successful SDK replies while the extension is enabled, and a failed standalone `user.getInfo` self-message under `disabledStandalone` when the extension is disabled.
 
 Manual provider path:
 
