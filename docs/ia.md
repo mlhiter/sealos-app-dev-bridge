@@ -37,9 +37,8 @@ Actions
   Capture current Desktop tab
   Use selected profile for this tab
   Reload tab
-  Remember for this origin
   Refresh profile
-  Open options
+  Open details
 
 Effective Profile
   hidden on non-local tabs
@@ -97,7 +96,7 @@ Current implementation status: the options page shows profile summaries, optiona
 
 - Keep capture and active profile switching in the popup.
 - Keep "use for this tab" in the popup as the primary path.
-- Keep destructive actions and bulk default management in the options page or behind confirmation.
+- Keep optional origin defaults, destructive actions, and bulk default management in the options page or behind confirmation.
 - Never require users to inspect raw storage for normal workflows.
 - Do not use modals as the first interaction path.
 

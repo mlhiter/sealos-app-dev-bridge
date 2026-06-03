@@ -24,8 +24,7 @@ select {
 
 .popup-header,
 .panel-head,
-.field-head,
-.button-row {
+.field-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -128,10 +127,6 @@ select {
 .icon-button {
   background: #f7f8f8;
   color: #0f7f68;
-}
-
-.button-row > button {
-  flex: 1;
 }
 
 button:disabled,

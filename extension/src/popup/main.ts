@@ -20,7 +20,6 @@ const profileSelect = query<HTMLSelectElement>('#profile-select');
 const selectedProfileDetailsNode = query('#selected-profile-details');
 const useProfileButton = query<HTMLButtonElement>('#use-profile');
 const reloadButton = query<HTMLButtonElement>('#reload-tab');
-const rememberOriginButton = query<HTMLButtonElement>('#remember-origin');
 const captureButton = query<HTMLButtonElement>('#capture-profile');
 const captureNoteNode = query('#capture-note');
 const effectiveProfilePanelNode = query('#effective-profile-panel');
@@ -135,7 +134,6 @@ function syncControlState() {
   const selectedProfile = Boolean(profileSelect.value);
 
   useProfileButton.disabled = !hasProfiles || !isLocalTab || !selectedProfile;
-  rememberOriginButton.disabled = !hasProfiles || !isLocalTab || !selectedProfile;
   reloadButton.disabled = activeTab?.ok !== true;
   captureButton.disabled = activeTab?.ok !== true || isLocalTab;
   if (activeTab?.ok === true && isLocalTab) {
@@ -162,18 +160,6 @@ async function useProfileForCurrentTab() {
   resolution = response.data;
   renderResolution(response.data);
   setStatus('Profile selected, reload tab');
-}
-
-async function rememberOriginDefault() {
-  if (activeTab?.ok !== true || !activeTab.isLocal || !profileSelect.value) return;
-  const response = await sendBridgeMessage({
-    type: 'bridge.rememberOriginDefault',
-    localOrigin: activeTab.origin,
-    profileId: profileSelect.value,
-    enabled: true
-  });
-
-  setStatus(response.ok ? 'Origin default saved' : response.error.message);
 }
 
 async function captureCurrentTab() {
@@ -220,7 +206,6 @@ function query<T extends HTMLElement = HTMLElement>(selector: string): T {
 }
 
 useProfileButton.addEventListener('click', () => void useProfileForCurrentTab());
-rememberOriginButton.addEventListener('click', () => void rememberOriginDefault());
 captureButton.addEventListener('click', () => void captureCurrentTab());
 reloadButton.addEventListener('click', () => void reloadCurrentTab());
 openOptionsButton.addEventListener('click', () => void chrome.runtime.openOptionsPage());

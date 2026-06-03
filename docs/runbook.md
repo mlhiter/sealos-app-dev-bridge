@@ -57,8 +57,8 @@ extension/dist
 3. Add background/service worker storage module.
 4. Add Desktop capture content script.
 5. Add localhost bridge injection.
-6. Add popup UI for capture and current-tab profile selection.
-7. Add options UI for profiles and optional origin defaults.
+6. Add popup UI for capture, current-tab profile selection, reload, and profile details access.
+7. Add options UI for profiles, optional origin defaults, and SDK message metadata.
 8. Add local verification fixtures or tests.
 
 ## Manual Chrome Loading

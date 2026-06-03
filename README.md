@@ -124,7 +124,7 @@ The current stack is TypeScript plus a minimal Vite build pipeline. Popup and op
 - Current-tab profile selection model with origin-default and active-profile fallback logic.
 - Redacted public profile summaries for UI/debug surfaces.
 - Main-world SDK bridge for `user.getInfo`, `getLanguage`, `getHostConfig`, `account.getWorkspaceQuota`, and safe `event-bus` fallbacks.
-- Popup workflow for capture, current-tab profile selection, reload, origin defaults, and options access.
+- Popup workflow for capture, current-tab profile selection, reload, and profile details access.
 - Options page for profile summaries, optional origin defaults, and metadata-only SDK message logs.
 
 ## Fixture
