@@ -7,6 +7,8 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "clean": "node scripts/clean.mjs",
+    "package": "node scripts/package.mjs",
+    "release:verify-version": "node scripts/verify-release-version.mjs",
     "smoke:extension": "node scripts/smoke-extension.mjs",
     "test": "tsx --test tests/**/*.test.ts",
     "typecheck": "tsc --noEmit"
@@ -14,6 +16,7 @@
   "devDependencies": {
     "@types/chrome": "^0.1.42",
     "@types/node": "^25.9.1",
+    "playwright": "^1.60.0",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3",
     "vite": "^7.3.5"

@@ -30,6 +30,18 @@ Build the unpacked extension:
 npm run build
 ```
 
+Package a GitHub Release zip:
+
+```bash
+npm run package
+```
+
+Verify a release tag matches project versions:
+
+```bash
+npm run release:verify-version -- v0.1.0
+```
+
 Run the automated extension smoke test:
 
 ```bash
@@ -46,6 +58,13 @@ Build output:
 
 ```text
 extension/dist
+```
+
+Release zip output:
+
+```text
+release/sealos-app-dev-bridge-<version>.zip
+release/sealos-app-dev-bridge-<version>.zip.sha256
 ```
 
 ## Initial Implementation Checklist
@@ -69,6 +88,56 @@ extension/dist
 4. Choose "Load unpacked".
 5. Select `extension/dist`.
 6. Pin the extension action for quick access.
+
+## GitHub Release Distribution
+
+Releases are published by GitHub Actions when a semver tag is pushed:
+
+```bash
+git tag v0.1.0
+git push origin v0.1.0
+```
+
+The release workflow verifies that the tag version matches both `package.json` and `extension/manifest.json`, installs dependencies, installs Playwright Chromium, runs typecheck, tests, build, smoke verification, packages the extension, then creates the GitHub Release with:
+
+- `sealos-app-dev-bridge-<version>.zip`
+- `sealos-app-dev-bridge-<version>.zip.sha256`
+
+Before pushing a release tag locally, run:
+
+```bash
+npm run release:verify-version -- v0.1.0
+npm run typecheck
+npm test
+npm run build
+npm run smoke:extension
+npm run package
+```
+
+Ask each teammate to:
+
+1. Download `sealos-app-dev-bridge-<version>.zip` from the GitHub Release.
+2. Unzip the package.
+3. In Chrome, open `chrome://extensions`, enable Developer Mode, choose "Load unpacked", and select the unzipped `sealos-app-dev-bridge` folder.
+4. For updates, replace the local unzipped folder contents with the new release contents, then click reload on the extension card.
+
+The manifest includes a fixed public `key`, so Chrome should derive the same extension ID across release zips. Captured profiles still live only in each teammate's own `chrome.storage.local` under that extension ID; they are not included in the release zip.
+
+## Manual Release Packaging
+
+Use this only for local preflight or debugging the release asset:
+
+1. Run the verification commands:
+   ```bash
+   npm run typecheck
+   npm test
+   npm run build
+   npm run smoke:extension
+   ```
+2. Package the extension:
+   ```bash
+   npm run package
+   ```
 
 ## Profile Capture Verification
 

@@ -5,8 +5,6 @@ import { join, resolve } from 'node:path';
 
 const root = resolve(import.meta.dirname, '..');
 const extensionDir = resolve(root, 'extension/dist');
-const fallbackPlaywrightPackage =
-  'file:///Users/mlhiter/Library/Caches/ms-playwright-go/1.52.0/package/index.mjs';
 
 const { chromium } = await loadPlaywright();
 
@@ -372,7 +370,9 @@ function assert(condition, message) {
 async function loadPlaywright() {
   try {
     return await import('playwright');
-  } catch {
-    return import(fallbackPlaywrightPackage);
+  } catch (error) {
+    throw new Error(
+      `Playwright is required for npm run smoke:extension. Run npm install first. ${error instanceof Error ? error.message : ''}`
+    );
   }
 }
