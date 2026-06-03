@@ -1,0 +1,10 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" color="#0f7f68" role="img" aria-labelledby="title desc">
+  <title id="title">Safe Origin</title>
+  <desc id="desc">Local-only injection protected by an explicit origin boundary.</desc>
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M50 20 L72 30 V48 C72 63 63 74 50 80 C37 74 28 63 28 48 V30Z" stroke-width="5"/>
+    <path d="M37 51 H49 C57 51 59 41 66 41" stroke-width="5"/>
+  </g>
+  <circle cx="37" cy="51" r="5" fill="currentColor"/>
+  <circle cx="66" cy="41" r="5" fill="currentColor"/>
+</svg>

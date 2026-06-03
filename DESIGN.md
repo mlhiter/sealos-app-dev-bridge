@@ -181,6 +181,12 @@ Use tonal layering before shadows. Browser extension popups are small surfaces; 
 - **Style:** Full-width inline band, not a modal.
 - **Content:** Short state label plus one action when useful, such as "Refresh from Desktop".
 
+### Extension Icon
+
+- **Concept:** A switchboard bridge: two compact rounded surfaces represent a local provider tab and a captured Desktop profile, joined by a central profile switch.
+- **Color:** Bridge Green background with Mist Surface linework and a pale green center switch. The icon should remain readable at Chrome toolbar size, so avoid thin strokes or extra detail.
+- **Assets:** Editable source lives at `extension/icons/logo.svg`; Chrome icons are exported as `icon-16.png`, `icon-32.png`, `icon-48.png`, and `icon-128.png`. Logo exploration variants live under `extension/icons/variants/`.
+
 ## 6. Do's and Don'ts
 
 Do show the active profile name, Desktop origin, region, workspace, and user together.

@@ -1,0 +1,9 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" color="#0f7f68" role="img" aria-labelledby="title desc">
+  <title id="title">Session Loop</title>
+  <desc id="desc">A controlled SDK round trip between Desktop and the local app.</desc>
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M28 50 C28 33 47 33 50 50 C53 67 72 67 72 50 C72 33 53 33 50 50 C47 67 28 67 28 50Z" stroke-width="5"/>
+  </g>
+  <circle cx="28" cy="50" r="5.5" fill="currentColor"/>
+  <circle cx="72" cy="50" r="5.5" fill="currentColor"/>
+</svg>

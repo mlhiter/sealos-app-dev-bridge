@@ -1,0 +1,12 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" color="#0f7f68" role="img" aria-labelledby="title desc">
+  <title id="title">Cluster Socket</title>
+  <desc id="desc">Cluster identity connected through a local extension socket.</desc>
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M31 34 L50 24 L69 34 V56 L50 67 L31 56Z" stroke-width="5"/>
+    <path d="M50 67 V78" stroke-width="5"/>
+    <path d="M39 78 H61" stroke-width="5"/>
+  </g>
+  <circle cx="50" cy="24" r="5.5" fill="currentColor"/>
+  <circle cx="31" cy="56" r="5.5" fill="currentColor"/>
+  <circle cx="69" cy="56" r="5.5" fill="currentColor"/>
+</svg>

@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sealos App Dev Bridge Logo Exploration</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --surface: #f7f8f8;
+      --raised: #eef3f1;
+      --text: #18201d;
+      --text-muted: #596760;
+      --border: #c6d0cb;
+      --primary: #0f7f68;
+      --primary-dark: #0b6856;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--surface);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      line-height: 1.45;
+    }
+
+    main {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 56px 0 72px;
+    }
+
+    header {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(28px, 4vw, 46px);
+      font-weight: 680;
+      letter-spacing: 0;
+    }
+
+    .intro {
+      max-width: 720px;
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      min-height: 340px;
+      display: grid;
+      grid-template-rows: 176px auto;
+      gap: 18px;
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .canvas {
+      display: grid;
+      place-items: center;
+      border-radius: 6px;
+      background:
+        linear-gradient(135deg, rgba(15, 127, 104, 0.08), rgba(227, 235, 231, 0.38)),
+        var(--raised);
+    }
+
+    .canvas img {
+      width: 112px;
+      height: 112px;
+      color: var(--primary);
+    }
+
+    .app-icon {
+      border-radius: 18px;
+      box-shadow: 0 12px 32px rgba(24, 32, 29, 0.14);
+    }
+
+    .meta {
+      display: grid;
+      gap: 8px;
+    }
+
+    .title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 650;
+      letter-spacing: 0;
+    }
+
+    .badge {
+      flex: 0 0 auto;
+      padding: 4px 7px;
+      border-radius: 999px;
+      background: rgba(15, 127, 104, 0.12);
+      color: var(--primary-dark);
+      font-size: 11px;
+      font-weight: 650;
+    }
+
+    .subtitle {
+      margin: 0;
+      color: var(--primary-dark);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+    }
+
+    p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    .footer {
+      margin-top: 26px;
+      padding: 14px 0 0;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Sealos App Dev Bridge</h1>
+      <p class="intro">Six compact logo directions for a local Chrome MV3 bridge that maps localhost provider tabs to captured Sealos Desktop profiles. The recommended app icon keeps the mark visible at toolbar size while the variants stay single-color and editable.</p>
+    </header>
+
+    <section class="grid" aria-label="Logo variants">
+      <article class="card">
+        <div class="canvas">
+          <img class="app-icon" src="logo.svg" alt="Recommended Sealos App Dev Bridge app icon">
+        </div>
+        <div class="meta">
+          <div class="title-row">
+            <h2>Switchboard Bridge</h2>
+            <span class="badge">Recommended</span>
+          </div>
+          <p class="subtitle">localhost tab + Desktop profile</p>
+          <p>Two compact surfaces are joined by a central switch. It reads as a browser-extension utility first, with enough mass to survive 16px toolbar rendering.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="canvas">
+          <img src="variants/02-session-loop.svg" alt="Session Loop logo variant">
+        </div>
+        <div class="meta">
+          <h2>Session Loop</h2>
+          <p class="subtitle">SDK request and response</p>
+          <p>A continuous loop describes the Desktop SDK round trip. The endpoints stay explicit so it does not feel like a generic infinity mark.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="canvas">
+          <img src="variants/03-tab-port.svg" alt="Tab Port logo variant">
+        </div>
+        <div class="meta">
+          <h2>Tab Port</h2>
+          <p class="subtitle">local origin routing</p>
+          <p>A lower local tab connects to an upper profile node. This direction emphasizes origin and port selection more than profile storage.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="canvas">
+          <img src="variants/04-profile-stack.svg" alt="Profile Stack logo variant">
+        </div>
+        <div class="meta">
+          <h2>Profile Stack</h2>
+          <p class="subtitle">multi-cluster profile set</p>
+          <p>Layered profile cards make multi-cluster support visible. The active row gets a socket-like endpoint for the selected current tab.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="canvas">
+          <img src="variants/05-cluster-socket.svg" alt="Cluster Socket logo variant">
+        </div>
+        <div class="meta">
+          <h2>Cluster Socket</h2>
+          <p class="subtitle">environment identity</p>
+          <p>A small cluster frame drops into a local socket. This is the most infrastructure-forward option, useful if the project wants a Kubernetes-adjacent feel.</p>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="canvas">
+          <img src="variants/06-safe-origin.svg" alt="Safe Origin logo variant">
+        </div>
+        <div class="meta">
+          <h2>Safe Origin</h2>
+          <p class="subtitle">local-only boundary</p>
+          <p>The shielded outline turns the safety contract into the mark: local origins only, explicit profile reuse, no hidden auth bypass posture.</p>
+        </div>
+      </article>
+    </section>
+
+    <div class="footer">
+      extension/icons/logo.svg exports to icon-16.png, icon-32.png, icon-48.png, and icon-128.png.
+    </div>
+  </main>
+</body>
+</html>

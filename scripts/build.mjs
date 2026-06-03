@@ -30,6 +30,9 @@ await cp(resolve(root, 'extension/src/options/index.html'), resolve(outDir, 'opt
 await cp(resolve(root, 'extension/src/options/styles.css'), resolve(outDir, 'options/styles.css'), {
   recursive: true
 });
+await cp(resolve(root, 'extension/icons'), resolve(outDir, 'icons'), {
+  recursive: true
+});
 
 for (const item of entries) {
   await build({

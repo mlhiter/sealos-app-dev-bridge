@@ -1,0 +1,10 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" color="#0f7f68" role="img" aria-labelledby="title desc">
+  <title id="title">Switchboard Bridge</title>
+  <desc id="desc">Two local surfaces connected by a central profile switch.</desc>
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="23" y="26" width="29" height="27" rx="7" stroke-width="5"/>
+    <rect x="48" y="47" width="29" height="27" rx="7" stroke-width="5"/>
+    <path d="M51 39 C62 40 38 60 49 61" stroke-width="6"/>
+  </g>
+  <circle cx="50" cy="50" r="7" fill="currentColor"/>
+</svg>

@@ -1,0 +1,11 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" color="#0f7f68" role="img" aria-labelledby="title desc">
+  <title id="title">Tab Port</title>
+  <desc id="desc">A localhost tab routed to a captured Desktop profile.</desc>
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="23" y="54" width="34" height="23" rx="6" stroke-width="5"/>
+    <path d="M30 62 H50" stroke-width="4"/>
+    <path d="M51 60 C55 45 60 36 73 29" stroke-width="5"/>
+  </g>
+  <circle cx="74" cy="28" r="8" fill="currentColor"/>
+  <circle cx="40" cy="66" r="4" fill="currentColor"/>
+</svg>

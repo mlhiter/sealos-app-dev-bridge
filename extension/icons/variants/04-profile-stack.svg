@@ -1,0 +1,11 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" color="#0f7f68" role="img" aria-labelledby="title desc">
+  <title id="title">Profile Stack</title>
+  <desc id="desc">Multiple captured profiles with one active bridge selection.</desc>
+  <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="26" y="25" width="43" height="24" rx="7" stroke-width="5" opacity="0.4"/>
+    <rect x="31" y="38" width="43" height="24" rx="7" stroke-width="5" opacity="0.68"/>
+    <rect x="36" y="51" width="43" height="24" rx="7" stroke-width="5"/>
+    <path d="M39 63 H58" stroke-width="5"/>
+  </g>
+  <circle cx="69" cy="63" r="6" fill="currentColor"/>
+</svg>
