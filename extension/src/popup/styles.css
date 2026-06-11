@@ -31,8 +31,8 @@ select {
 
 .popup-shell {
   display: grid;
-  gap: 7px;
-  padding: 10px;
+  gap: 6px;
+  padding: 9px;
   background:
     linear-gradient(180deg, var(--surface-wash) 0%, var(--surface) 42%),
     var(--surface);
@@ -48,11 +48,11 @@ select {
 }
 
 .field-head.compact {
-  margin-top: 2px;
+  margin-top: 1px;
 }
 
 .popup-header {
-  padding: 2px 2px 1px;
+  padding: 1px 2px 0;
 }
 
 h1 {
@@ -102,15 +102,15 @@ h1 {
 .state-panel,
 .control-group {
   display: grid;
-  gap: 7px;
+  gap: 6px;
   border: 1px solid var(--soft);
   border-radius: 8px;
   background: var(--surface-raised);
-  padding: 9px;
+  padding: 8px;
 }
 
 .state-panel {
-  gap: 6px;
+  gap: 5px;
   background: var(--surface-panel);
 }
 
@@ -154,7 +154,7 @@ select {
   border-radius: 7px;
   background: var(--surface-wash);
   color: var(--ink);
-  padding: 7px 9px;
+  padding: 6px 9px;
   font-size: 13px;
   font-weight: 650;
 }
@@ -163,7 +163,7 @@ select {
 .secondary-button {
   border: 1px solid transparent;
   border-radius: 7px;
-  padding: 8px 10px;
+  padding: 7px 10px;
   font-size: 12px;
   font-weight: 650;
   line-height: 1.2;
