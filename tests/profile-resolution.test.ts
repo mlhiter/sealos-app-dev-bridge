@@ -82,6 +82,7 @@ describe('profile resolution', () => {
       tabId: 7,
       localOrigin: 'http://localhost:3000',
       profileId: profileB.id,
+      languageOverride: 'zh',
       selectedAt: '2026-06-02T09:01:00.000Z'
     });
 
@@ -93,6 +94,9 @@ describe('profile resolution', () => {
     assert.equal(resolved.source, 'tab-selection');
     assert.equal(resolved.profileId, profileB.id);
     assert.equal(resolved.profile?.user.name, 'Ben');
+    assert.equal(resolved.language, 'zh');
+    assert.equal(resolved.languageOverride, 'zh');
+    assert.equal(profileB.language, 'en');
   });
 
   it('falls back from origin default to active profile and then no-profile error', () => {
@@ -109,6 +113,7 @@ describe('profile resolution', () => {
       localOrigin: 'http://localhost:3000'
     });
     assert.equal(originResolved.source, 'origin-default');
+    assert.equal(originResolved.language, profile.language);
 
     state.originDefaults['http://localhost:3000'].enabled = false;
     state.activeProfileId = profile.id;
@@ -116,6 +121,7 @@ describe('profile resolution', () => {
       localOrigin: 'http://localhost:3000'
     });
     assert.equal(activeResolved.source, 'active-profile');
+    assert.equal(activeResolved.language, profile.language);
 
     state.activeProfileId = undefined;
     const missingResolved = resolveEffectiveProfile(state, {

@@ -2,7 +2,7 @@
 
 ## Current Status
 
-As of 2026-06-03, this project has a TypeScript Chrome MV3 MVP with profile storage, Desktop session capture, tab-first profile resolution, main-world SDK bridge behavior, popup/options workflows, selected-profile details in the popup, package scripts, a Vite build pipeline, Node test runner tests executed through `tsx`, and background/content/injected entrypoints.
+As of 2026-06-11, this project has a TypeScript Chrome MV3 MVP with profile storage, Desktop session capture, tab-first profile resolution, per-tab language override, main-world SDK bridge behavior, popup/options workflows, selected-profile details in the popup, package scripts, a Vite build pipeline, Node test runner tests executed through `tsx`, and background/content/injected entrypoints.
 
 ## Local Commands
 
@@ -149,10 +149,10 @@ Use this only for local preflight or debugging the release asset:
    - Capturing automatically trusts the current Desktop origin.
 5. Confirm the profile selector itself shows a short human-readable name plus Desktop host, not a profile ID or long region UID.
 6. Confirm the selected profile details under the profile selector show:
+   - effective language
    - Desktop origin
    - region UID
    - workspace or nsid
-   - captured timestamp
 
 Do not continue if the captured profile does not clearly identify the environment.
 
@@ -168,7 +168,7 @@ Automated fixture path:
    ```bash
    npm run smoke:extension
    ```
-3. Confirm the JSON output reports `ok: true`, successful SDK replies while the extension is enabled, and a failed standalone `user.getInfo` self-message under `disabledStandalone` when the extension is disabled.
+3. Confirm the JSON output reports `ok: true`, successful SDK replies while the extension is enabled, `language.lng` matching the selected override, and a failed standalone `user.getInfo` self-message under `disabledStandalone` when the extension is disabled.
 
 Manual provider path:
 
@@ -179,17 +179,18 @@ Manual provider path:
 2. Open the local page directly in a new tab.
 3. Open the extension popup on that tab.
 4. Choose the intended captured profile for the current tab.
-5. Click `Use For This Tab`; the popup should save the current-tab selection, reload the local tab, and close.
-6. Verify the app does not show the standalone-use redirect or modal.
-7. In browser devtools, confirm SDK calls receive successful responses.
+5. Choose the intended SDK language: `Follow captured`, `Chinese (zh)`, or `English (en)`.
+6. Click `Use For This Tab`; the popup should save the current-tab selection and optional language override, reload the local tab, and close.
+7. Verify the app does not show the standalone-use redirect or modal.
+8. In browser devtools, confirm SDK calls receive successful responses.
    - `user.getInfo` returns the selected profile session.
-   - `getLanguage` returns the selected profile language.
+   - `getLanguage` returns the selected language override when set, or the captured profile language when using `Follow captured`.
    - `getHostConfig` returns the selected profile host config with `regionUid`.
    - `account.getWorkspaceQuota` returns the MVP safe zero-quota fallback.
    - known `event-bus` app events return a safe local no-op response.
-8. Confirm provider API requests include the expected session-derived authorization header.
-9. Switch the current tab to another profile and confirm behavior follows the new profile after the automatic reload.
-10. Disable the extension and reload to confirm normal standalone failure behavior returns.
+9. Confirm provider API requests include the expected session-derived authorization header.
+10. Switch the current tab to another profile or language and confirm behavior follows the new selection after the automatic reload.
+11. Disable the extension and reload to confirm normal standalone failure behavior returns.
 
 ## Multi-cluster Verification
 
@@ -218,6 +219,12 @@ Manual provider path:
 - Confirm local origin includes the correct protocol and port.
 - Confirm remembered origin default or active profile fallback is not being used unexpectedly.
 - Confirm the Current Tab panel shows the expected profile source for the current tab.
+
+### Wrong language is active
+
+- Confirm the popup language selector shows the intended value for the current local tab.
+- Use `Follow captured` to clear the tab language override and return to the captured Desktop language.
+- Confirm the provider initializes language from `sealosApp.getLanguage()` after the automatic reload; providers that also encode language in the URL may need the reload to re-run their route initialization.
 
 ### API calls are unauthorized
 

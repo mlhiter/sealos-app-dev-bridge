@@ -69,6 +69,23 @@ describe('SDK bridge responder', () => {
     assert.equal(Array.isArray(quota.reply.data.quota), true);
   });
 
+  it('answers getLanguage with the effective tab language', () => {
+    const profile = {
+      ...createTestProfile(),
+      language: 'en'
+    };
+    const language = handleSdkRequest({
+      request: {
+        messageId: 'message-language-override',
+        apiName: SDK_API.GET_LANGUAGE
+      },
+      profile
+    });
+
+    assert.equal(language.handled, true);
+    assert.deepEqual(language.reply.data, { lng: 'en' });
+  });
+
   it('returns safe event-bus fallback and rejects unknown events', () => {
     const profile = createTestProfile();
     const safe = handleSdkRequest({

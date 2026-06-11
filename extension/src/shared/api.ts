@@ -22,6 +22,7 @@ export type BridgeRequest =
       tabId: number;
       localOrigin: string;
       profileId: string;
+      languageOverride?: string;
     }
   | {
       type: 'bridge.clearTabProfile';

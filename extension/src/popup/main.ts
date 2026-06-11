@@ -16,6 +16,7 @@ const tabKindNode = query('#tab-kind');
 const originNode = query('#current-origin');
 const profileSourceNode = query('#profile-source');
 const profileSelect = query<HTMLSelectElement>('#profile-select');
+const languageSelect = query<HTMLSelectElement>('#language-select');
 const selectedProfileDetailsNode = query('#selected-profile-details');
 const useProfileButton = query<HTMLButtonElement>('#use-profile');
 const captureButton = query<HTMLButtonElement>('#capture-profile');
@@ -31,6 +32,7 @@ async function render() {
   activeTab = await getActiveTabInfo();
 
   renderProfiles(state.profiles);
+  renderLanguageOptions();
   renderTab(activeTab);
 
   if (activeTab.ok && activeTab.isLocal) {
@@ -64,7 +66,47 @@ function renderProfiles(profiles: ProfileSummary[]) {
     profileSelect.value = preferred;
   }
 
+  renderLanguageOptions();
   renderSelectedProfileDetails();
+}
+
+function renderLanguageOptions() {
+  const selectedProfile = state?.profiles.find((candidate) => candidate.id === profileSelect.value);
+  const capturedLanguage = selectedProfile?.language || 'en';
+  const selectedOverride =
+    resolution?.source === 'tab-selection' && resolution.profileId === selectedProfile?.id
+      ? resolution.languageOverride
+      : undefined;
+  const languageOptions = [
+    {
+      value: '',
+      label: `Follow captured (${capturedLanguage})`
+    },
+    {
+      value: 'zh',
+      label: 'Chinese (zh)'
+    },
+    {
+      value: 'en',
+      label: 'English (en)'
+    }
+  ];
+
+  if (
+    capturedLanguage &&
+    !languageOptions.some((option) => option.value === capturedLanguage)
+  ) {
+    languageOptions.push({
+      value: capturedLanguage,
+      label: capturedLanguage
+    });
+  }
+
+  languageSelect.innerHTML = '';
+  for (const option of languageOptions) {
+    languageSelect.append(new Option(option.label, option.value));
+  }
+  languageSelect.value = selectedOverride ?? '';
 }
 
 function renderTab(tab: Awaited<ReturnType<typeof getActiveTabInfo>>) {
@@ -93,6 +135,7 @@ function renderResolution(nextResolution: EffectiveProfileResolution) {
 
   const profile = nextResolution.profile;
   profileSelect.value = profile.id;
+  renderLanguageOptions();
   renderSelectedProfileDetails();
 }
 
@@ -106,6 +149,7 @@ function renderSelectedProfileDetails() {
     return;
   }
 
+  const languageValue = languageSelect.value || profile.language;
   selectedProfileDetailsNode.className = 'profile-detail-block';
   selectedProfileDetailsNode.innerHTML = `
     <div class="profile-summary">
@@ -113,7 +157,12 @@ function renderSelectedProfileDetails() {
       <span>${profile.hasKubeconfig ? 'Session ready' : 'Session incomplete'}</span>
     </div>
     <dl class="profile-detail-list">
+      <div>
+        <dt>Language</dt>
+        <dd>${escapeHtml(languageValue)}</dd>
+      </div>
       ${getProfileDetailRows(profile)
+        .filter(([label]) => label !== 'Captured')
         .map(
           ([label, value]) => `
             <div>
@@ -133,6 +182,7 @@ function syncControlState() {
   const selectedProfile = Boolean(profileSelect.value);
 
   useProfileButton.disabled = !hasProfiles || !isLocalTab || !selectedProfile;
+  languageSelect.disabled = !hasProfiles || !selectedProfile;
   captureButton.disabled = activeTab?.ok !== true || isLocalTab;
   if (activeTab?.ok === true && isLocalTab) {
     captureNoteNode.textContent = 'Switch to an authenticated Sealos Desktop tab to capture a profile.';
@@ -147,7 +197,8 @@ async function useProfileForCurrentTab() {
     type: 'bridge.selectTabProfile',
     tabId: activeTab.tabId,
     localOrigin: activeTab.origin,
-    profileId: profileSelect.value
+    profileId: profileSelect.value,
+    languageOverride: languageSelect.value || undefined
   });
 
   if (!response.ok) {
@@ -201,6 +252,11 @@ function query<T extends HTMLElement = HTMLElement>(selector: string): T {
 useProfileButton.addEventListener('click', () => void useProfileForCurrentTab());
 captureButton.addEventListener('click', () => void captureCurrentTab());
 profileSelect.addEventListener('change', () => {
+  renderLanguageOptions();
+  renderSelectedProfileDetails();
+  syncControlState();
+});
+languageSelect.addEventListener('change', () => {
   renderSelectedProfileDetails();
   syncControlState();
 });

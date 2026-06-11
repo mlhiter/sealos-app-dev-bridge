@@ -8,7 +8,7 @@ The first implementation target is a Chrome Manifest V3 extension.
 
 ## Current State
 
-As of 2026-06-03, the project has a TypeScript Chrome Manifest V3 extension MVP with profile storage, Desktop session capture, tab-first profile resolution, main-world SDK bridge behavior, popup/options workflows, selected-profile details in the popup, Node test runner tests executed through `tsx`, and documentation.
+As of 2026-06-11, the project has a TypeScript Chrome Manifest V3 extension MVP with profile storage, Desktop session capture, tab-first profile resolution, per-tab SDK language override, main-world SDK bridge behavior, popup/options workflows, selected-profile details in the popup, Node test runner tests executed through `tsx`, and documentation.
 
 ## Hard Rules
 
@@ -37,6 +37,7 @@ As of 2026-06-03, the project has a TypeScript Chrome Manifest V3 extension MVP 
   2. remembered profile for the current local origin, including optional origin/port bindings
   3. active profile fallback
   4. no profile error that asks the user to choose in the popup
+- Treat language switching as a current-tab override for SDK `getLanguage`; do not rewrite the captured profile language when a developer chooses `zh` or `en` in the popup.
 
 ## Key SDK Contract
 

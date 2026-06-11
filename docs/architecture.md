@@ -72,6 +72,7 @@ desktopOrigin + regionUID + session.user.nsid
 If future evidence shows `nsid` is insufficient for workspace identity across clusters, include workspace UID or namespace from the captured session/kubeconfig.
 
 Current-tab selections and origin defaults should be stored separately from the profile payload so one captured profile does not "own" a local port.
+The current-tab selection may also carry a language override. That override is local to the tab and does not rewrite the captured profile language.
 
 ```ts
 type BridgeSelectionState = {
@@ -80,6 +81,7 @@ type BridgeSelectionState = {
     {
       localOrigin: string;
       profileId: string;
+      languageOverride?: string;
       selectedAt: string;
     }
   >;
@@ -133,7 +135,7 @@ SDK APIs to support:
 | API | Response |
 | --- | --- |
 | `user.getInfo` | Current profile `SessionV1` |
-| `getLanguage` | `{ lng }` |
+| `getLanguage` | `{ lng }`, using current-tab language override first and captured profile language as fallback |
 | `getHostConfig` | `{ cloud, features }` |
 | `account.getWorkspaceQuota` | Safe zero-quota fallback in MVP |
 | `event-bus` | Safe local no-op fallback for known app events |
@@ -151,7 +153,7 @@ Profile selection must be deterministic:
 
 This keeps the normal workflow tab-first: the same `http://localhost:3000` page can use staging in one debugging session and a test cluster in the next. Origin defaults are convenience automation for stable workflows, not the primary model.
 
-Changing the selected profile for a tab reloads the local tab immediately in the MVP. Provider apps usually initialize their SDK session early, so hot-swapping a profile after app startup risks mixed old/new runtime state.
+Changing the selected profile or language for a tab reloads the local tab immediately in the MVP. Provider apps usually initialize their SDK session and language early, so hot-swapping after app startup risks mixed old/new runtime state.
 
 ## Storage Boundary
 

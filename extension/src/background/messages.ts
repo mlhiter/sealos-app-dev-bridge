@@ -104,6 +104,7 @@ async function selectTabProfile(
           tabId: request.tabId,
           localOrigin,
           profileId: request.profileId,
+          languageOverride: request.languageOverride,
           selectedAt: new Date().toISOString()
         })
       },
@@ -216,9 +217,16 @@ async function handleSdkRequestForTab(
     localOrigin
   });
   const profile = resolution.profileId ? state.profiles[resolution.profileId] : undefined;
+  const responseProfile =
+    profile && resolution.source !== 'none'
+      ? {
+          ...profile,
+          language: resolution.language
+        }
+      : profile;
   const result = handleSdkRequest({
     request: request.request,
-    profile
+    profile: responseProfile
   });
 
   if (!result.handled) {

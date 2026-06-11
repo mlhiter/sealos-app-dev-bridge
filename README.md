@@ -16,7 +16,7 @@
 
 Sealos App Dev Bridge is a local developer browser extension for Sealos Desktop app development. It lets provider apps running on `localhost` receive the `sealos-desktop-sdk` master responses they normally receive inside Sealos Desktop, without creating a Sealos App CR that points to a local dev server.
 
-The current implementation is a TypeScript Chrome Manifest V3 extension with profile capture, profile storage, tab-first profile selection, a main-world SDK bridge, popup/options workflows, automated Node tests, and a Playwright Chromium smoke test.
+The current implementation is a TypeScript Chrome Manifest V3 extension with profile capture, profile storage, tab-first profile selection, per-tab language override, a main-world SDK bridge, popup/options workflows, automated Node tests, and a Playwright Chromium smoke test.
 
 > [!IMPORTANT]
 > This is a local development bridge, not an auth bypass. It reuses context captured from a real authenticated Sealos Desktop page and only injects into local development origins such as `localhost` and `127.0.0.1`.
@@ -39,6 +39,7 @@ This project keeps local iteration local:
 - **Desktop profile capture** from `localStorage.session`, language, cloud config, and feature flags.
 - **Multi-profile storage** using `chrome.storage.local`.
 - **Tab-first profile resolution** so the current local tab selection wins over origin defaults and active-profile fallback.
+- **Per-tab language override** so local providers can test `sealosApp.getLanguage()` in `zh`, `en`, or the captured Desktop language.
 - **Main-world SDK bridge** injected at `document_start` for local app pages.
 - **Popup workflow** for capture, profile inspection, current-tab selection, and automatic reload.
 - **Options workflow** for profile summaries, optional origin defaults, and metadata-only SDK message logs.
@@ -52,7 +53,7 @@ The MVP answers the SDK calls most local providers need during startup:
 | SDK API | Local bridge response |
 | --- | --- |
 | `user.getInfo` | Captured `SessionV1`, including user, subscription, token when present, and kubeconfig |
-| `getLanguage` | Captured Desktop language |
+| `getLanguage` | Effective tab language: selected override first, captured Desktop language fallback |
 | `getHostConfig` | Captured cloud config and feature flags |
 | `account.getWorkspaceQuota` | Safe zero-quota fallback |
 | `event-bus` | Safe local no-op for known app events such as `openDesktopApp`, `closeDesktopApp`, `requestLogin`, and `quitGuide` |
@@ -94,7 +95,7 @@ extension/dist
 1. Open a real Sealos Desktop page and log in normally.
 2. Open the extension popup on that Desktop tab.
 3. Click **Capture Desktop Tab**.
-4. Confirm the popup shows the profile name, Desktop origin, region UID, workspace or nsid, user, and captured time.
+4. Confirm the popup shows the profile name, SDK language, Desktop origin, region UID, workspace or nsid, and user.
 
 > [!WARNING]
 > Do not continue with a profile you cannot identify. The active environment should be obvious before a local app receives it.
@@ -105,10 +106,11 @@ extension/dist
 2. Open the local app tab directly.
 3. Open the extension popup on that tab.
 4. Choose the intended captured profile.
-5. Click **Use For This Tab**.
-6. The extension stores the tab selection, reloads the local app, and closes the popup.
+5. Choose **Follow captured**, **Chinese (zh)**, or **English (en)** for SDK language.
+6. Click **Use For This Tab**.
+7. The extension stores the tab selection, reloads the local app, and closes the popup.
 
-After reload, SDK calls from that tab resolve against the selected profile. Switching the selected profile later reloads the tab again so provider startup state stays consistent.
+After reload, SDK calls from that tab resolve against the selected profile and language. Switching the selected profile or language later reloads the tab again so provider startup state stays consistent.
 
 ## Local Verification
 
@@ -121,7 +123,7 @@ npm run build
 npm run smoke:extension
 ```
 
-`npm run smoke:extension` launches Chromium with `extension/dist`, serves a fake Desktop page and local app fixture, captures a fake profile, selects it for a localhost tab through the popup, verifies SDK replies, and confirms the standalone failure behavior returns when the extension is disabled.
+`npm run smoke:extension` launches Chromium with `extension/dist`, serves a fake Desktop page and local app fixture, captures a fake profile, selects it for a localhost tab through the popup, verifies SDK replies including a language override, and confirms the standalone failure behavior returns when the extension is disabled.
 
 You can also serve the fixture manually after building and loading the extension:
 
@@ -140,6 +142,7 @@ Before calling a real app flow verified, check:
 
 - `sealosApp.getSession()` succeeds in the local provider app.
 - `user.getInfo`, `getLanguage`, `getHostConfig`, and quota calls receive expected responses.
+- `getLanguage` follows the current tab language override when one is selected, and otherwise follows the captured Desktop language.
 - Provider API requests include the expected session-derived authorization header.
 - Switching profiles changes local app behavior after reload.
 - Disabling the extension restores the normal standalone failure path.

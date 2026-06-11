@@ -2,7 +2,7 @@
 
 ## Current Stage
 
-Sealos App Dev Bridge has a TypeScript Chrome MV3 MVP with profile storage, Desktop session capture, tab-first profile resolution, the localhost SDK bridge, and popup/options workflows. The next implementation focus is live manual verification against real Sealos provider apps and hardening.
+Sealos App Dev Bridge has a TypeScript Chrome MV3 MVP with profile storage, Desktop session capture, tab-first profile resolution, per-tab SDK language override, the localhost SDK bridge, and popup/options workflows. The next implementation focus is live manual verification against real Sealos provider apps and hardening.
 
 ## Phase 1: Minimal Local Bridge
 
@@ -16,6 +16,7 @@ Goal: make one local provider app initialize successfully from a captured Deskto
 - Respond to `user.getInfo`, `getLanguage`, and `getHostConfig`. Done in the SDK bridge milestone.
 - Add minimal popup showing capture state and the profile selected for the current tab. Done in the UI milestone.
 - Let the popup assign or switch the current tab profile, with automatic reload after selection. Done in the UI milestone.
+- Let the popup override SDK `getLanguage` for the current tab while preserving the captured profile language. Done in the language workflow milestone.
 - Verify with a local DevBox or DBProvider page. Fixture support is implemented; real provider verification remains manual.
 
 Merge condition: a developer can open a local app page directly, choose a captured profile for that tab from the popup, and avoid the "not running in desktop" redirect path after the automatic reload.
@@ -31,6 +32,7 @@ Goal: make online, staging, and test clusters first-class.
 - Show profile identity in popup: Desktop origin, region UID, workspace, namespace, and user.
 - Add stale/expired profile warnings.
 - Verify switching the same local origin between at least two Sealos environments.
+- Verify switching the same selected profile between captured language, `zh`, and `en`.
 
 Merge condition: the same `localhost:3000` tab can be switched between captured profiles without manual token copying, and optional origin defaults do not block explicit tab switching.
 

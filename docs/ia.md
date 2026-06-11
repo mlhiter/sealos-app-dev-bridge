@@ -27,11 +27,12 @@ Current Tab
 
 Selected Profile
   select label with profile name and Desktop host
+  SDK language selector
   selected profile details visible under the selector
+  effective language
   Desktop origin
   region UID
   workspace / nsid
-  captured time
 
 Actions
   Capture Desktop tab
@@ -96,3 +97,4 @@ Current implementation status: the options page shows profile summaries, optiona
 - Label stale and unsafe states with text, not only color.
 - Keep messages short enough to fit the popup without wrapping unpredictably.
 - Distinguish temporary tab selection from remembered origin defaults in copy and status labels.
+- Label the language selector as SDK `getLanguage` behavior, with "Follow captured" as the no-override state.

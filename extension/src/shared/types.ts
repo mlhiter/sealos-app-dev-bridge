@@ -86,6 +86,7 @@ export type TabProfileSelection = {
   tabId: number;
   localOrigin: string;
   profileId: string;
+  languageOverride?: string;
   selectedAt: string;
 };
 
@@ -117,6 +118,8 @@ export type EffectiveProfileResolution =
       source: 'tab-selection' | 'origin-default' | 'active-profile';
       profile: ProfileSummary;
       profileId: string;
+      language: string;
+      languageOverride?: string;
       localOrigin: string;
       reloadRecommended: boolean;
     }

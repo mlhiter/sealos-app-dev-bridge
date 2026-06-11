@@ -125,6 +125,7 @@ async function runWithExtension(origin) {
     const actionPopupPage = await openPopupPage(context, extensionPage, extensionId);
     await actionPopupPage.setViewportSize({ width: 356, height: 600 });
     await actionPopupPage.selectOption('#profile-select', profileId);
+    await actionPopupPage.selectOption('#language-select', 'en');
     await Promise.all([
       appPage.waitForFunction(
         (previousCount) => window.__localAppLoadCount > previousCount,
@@ -137,6 +138,16 @@ async function runWithExtension(origin) {
       localLoadCountAfterSelection === localLoadCountBeforeSelection + 1,
       `Use For This Tab should reload the local app once: before=${localLoadCountBeforeSelection}, after=${localLoadCountAfterSelection}`
     );
+    await actionPopupPage.close();
+
+    await appPage.bringToFront();
+    const verifyPopupPage = await openPopupPage(context, extensionPage, extensionId);
+    const selectedLanguage = await verifyPopupPage.locator('#language-select').inputValue();
+    assert(
+      selectedLanguage === 'en',
+      `popup should remember the tab language override: ${selectedLanguage}`
+    );
+    await verifyPopupPage.close();
 
     const results = await sendSdkSmokeMessages(appPage);
     const bridgeMessages = await appPage.evaluate(() => window.__bridgeMessages);
@@ -149,7 +160,7 @@ async function runWithExtension(origin) {
       })}`
     );
     assert(results.user.data.kubeconfig === 'smoke-kubeconfig', 'user.getInfo should include kubeconfig');
-    assert(results.language.data.lng === 'zh', 'getLanguage should return captured language');
+    assert(results.language.data.lng === 'en', 'getLanguage should return selected language override');
     assert(
       results.hostConfig.data.cloud.regionUid === 'smoke-region',
       'getHostConfig should use SDK regionUid casing'
@@ -165,6 +176,12 @@ async function runWithExtension(origin) {
     );
     assertOk(state, 'read bridge state');
     assert(state.data.recentMessages.length >= 5, 'recent SDK logs should be recorded');
+    assert(
+      Object.values(state.data.tabSelections).some(
+        (selection) => selection.profileId === profileId && selection.languageOverride === 'en'
+      ),
+      `tab selection should store the selected language override: ${JSON.stringify(state.data.tabSelections)}`
+    );
 
     return {
       extensionId,

@@ -37,10 +37,13 @@ export function resolveEffectiveProfile(
     if (tabSelection?.localOrigin === localOrigin) {
       const profile = state.profiles[tabSelection.profileId];
       if (profile) {
+        const languageOverride = normalizeLanguageOverride(tabSelection.languageOverride);
         return {
           source: 'tab-selection',
           profile: toProfileSummary(profile),
           profileId: profile.id,
+          language: languageOverride ?? profile.language,
+          languageOverride,
           localOrigin,
           reloadRecommended: true
         };
@@ -56,6 +59,7 @@ export function resolveEffectiveProfile(
         source: 'origin-default',
         profile: toProfileSummary(profile),
         profileId: profile.id,
+        language: profile.language,
         localOrigin,
         reloadRecommended: true
       };
@@ -69,6 +73,7 @@ export function resolveEffectiveProfile(
         source: 'active-profile',
         profile: toProfileSummary(profile),
         profileId: profile.id,
+        language: profile.language,
         localOrigin,
         reloadRecommended: true
       };
@@ -87,12 +92,15 @@ export function createTabSelection(input: {
   tabId: number;
   localOrigin: string;
   profileId: string;
+  languageOverride?: string;
   selectedAt: string;
 }): TabProfileSelection {
+  const languageOverride = normalizeLanguageOverride(input.languageOverride);
   return {
     tabId: input.tabId,
     localOrigin: normalizeOrigin(input.localOrigin),
     profileId: input.profileId,
+    ...(languageOverride ? { languageOverride } : {}),
     selectedAt: input.selectedAt
   };
 }
@@ -109,4 +117,10 @@ export function createOriginDefault(input: {
     enabled: input.enabled,
     updatedAt: input.updatedAt
   };
+}
+
+export function normalizeLanguageOverride(language: string | undefined): string | undefined {
+  const normalized = language?.trim();
+  if (!normalized || normalized === 'profile') return undefined;
+  return normalized;
 }
