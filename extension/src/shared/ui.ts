@@ -72,7 +72,7 @@ export async function resolveCurrentTabProfile(
 }
 
 export function formatProfileLabel(profile: ProfileSummary) {
-  const name = profile.user.name || profile.name;
+  const name = profile.user.nsid || profile.name;
   const originHost = getOriginHost(profile.desktopOrigin);
   return originHost ? `${name} @ ${originHost}` : name;
 }

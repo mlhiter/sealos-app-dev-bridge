@@ -1,11 +1,12 @@
 import assert from 'node:assert/strict';
 import { describe, it } from 'node:test';
 
-import { createOriginDefault, createTabSelection, resolveEffectiveProfile } from '../extension/src/shared/profile';
+import { createOriginDefault, createTabSelection, resolveEffectiveProfile, toProfileSummary } from '../extension/src/shared/profile';
 import { normalizeOrigin } from '../extension/src/shared/origin';
 import { createProfileFromCapture, parseDesktopSession } from '../extension/src/shared/session';
 import { createDefaultState, readState, toPublicState, upsertProfile, writeState } from '../extension/src/shared/storage';
 import type { BridgeState } from '../extension/src/shared/types';
+import { formatProfileLabel } from '../extension/src/shared/ui';
 
 describe('Desktop session normalization', () => {
   it('normalizes localStorage.session into SessionV1', () => {
@@ -63,6 +64,15 @@ describe('profile creation', () => {
     assert.equal(profile.hostConfig.features.subscription, true);
     assert.equal(profile.language, 'zh');
     assert.match(profile.id, /^profile-[0-9a-f]{8}$/);
+  });
+
+  it('formats profile labels with workspace identity before Desktop host', () => {
+    const profileA = createTestProfile('test-region', 'workspace-a', 'admin');
+    const profileB = createTestProfile('test-region', 'workspace-b', 'admin');
+
+    assert.equal(formatProfileLabel(toProfileSummary(profileA)), 'workspace-a @ test-region.example.test');
+    assert.equal(formatProfileLabel(toProfileSummary(profileB)), 'workspace-b @ test-region.example.test');
+    assert.notEqual(formatProfileLabel(toProfileSummary(profileA)), formatProfileLabel(toProfileSummary(profileB)));
   });
 });
 

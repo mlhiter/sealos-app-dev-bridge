@@ -26,7 +26,7 @@ Current Tab
   profile source
 
 Selected Profile
-  select label with profile name and Desktop host
+  select label with workspace/nsid and Desktop host
   SDK language selector
   selected profile details visible under the selector
   effective language

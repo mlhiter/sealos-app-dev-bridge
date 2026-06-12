@@ -147,7 +147,7 @@ Use this only for local preflight or debugging the release asset:
 4. Capture the current profile.
    - The popup action is labeled `Capture Desktop Tab`.
    - Capturing automatically trusts the current Desktop origin.
-5. Confirm the profile selector itself shows a short human-readable name plus Desktop host, not a profile ID or long region UID.
+5. Confirm the profile selector itself shows the workspace or nsid plus Desktop host, not a profile ID, username-only label, or long region UID.
 6. Confirm the selected profile details under the profile selector show:
    - effective language
    - Desktop origin

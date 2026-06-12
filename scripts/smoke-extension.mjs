@@ -76,8 +76,8 @@ async function runWithExtension(origin) {
       .evaluate((select) => select.options[select.selectedIndex]?.textContent ?? '');
     const originHost = new URL(origin).host;
     assert(
-      selectedProfileLabel === `Smoke Ada @ ${originHost}`,
-      `popup profile option should show the profile name and Desktop host: ${selectedProfileLabel}`
+      selectedProfileLabel === `workspace-smoke @ ${originHost}`,
+      `popup profile option should show the workspace and Desktop host: ${selectedProfileLabel}`
     );
     assert(
       !selectedProfileLabel.includes('smoke-region') && !selectedProfileLabel.includes(profileId),
