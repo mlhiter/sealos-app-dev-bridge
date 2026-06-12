@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Sealos App Dev Bridge",
   "description": "Run local Sealos Desktop apps against captured Desktop profiles.",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtPTr2SQP873wveBT4YmuKQ55Ivzn9TYI2Sl8l2iz+SaeWQcg7lv2Rqwua6ZYEVmI05E/ZytuCAVJX75DkwHZaho+zw+Zgi/OxBcmsF3BZDjz3GOwIMzMiMn1F3R1zqTfqpnNJcRWHpildaCX8rkOYN3jt/uiRiGE+/R/AoOpcVjysfUEJ+orh13spMtTQQTnUYrRhAr0L8QEpXirLlXDKxNmvalJrFLjjLSIH3khzNht36XWF4ero7nGJW/VKzYUK1KNTlV7w1AosMiq+/xcr+R6a1gCWqkAY0qrOujeSKpeCYGCHoLBAhl8uk7lIlVV470+nJOQLBp60fiaGagN9QIDAQAB",
   "icons": {
     "16": "icons/icon-16.png",

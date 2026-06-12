@@ -86,6 +86,7 @@ export function getProfileDetailRows(profile: ProfileSummary) {
     ['Desktop', profile.desktopOrigin],
     ['Region', profile.cloud.regionUID],
     ['Workspace', profile.user.nsid],
+    ['User', profile.user.name],
     ['Captured', new Date(profile.capturedAt).toLocaleString()]
   ] as const;
 }
